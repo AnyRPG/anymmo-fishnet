@@ -5,8 +5,8 @@
 This is the FishNet MMO addon for AnyRPG.
 
 It adds the following features and functionality:
-* FishNet compatible character base
-* Template content that includes FishNet NPCs
+* FishNet compatible character and mount prefabs
+* Template content that includes FishNet NPCs and Interactables
 * An FishNet MMO demo game to demonstrate how it all works with AnyRPG
 
 ## Installation
