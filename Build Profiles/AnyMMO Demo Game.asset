@@ -21,15 +21,15 @@ MonoBehaviour:
   m_OverrideGlobalSceneList: 1
   m_Scenes:
   - m_enabled: 1
-    m_path: Assets/AnyRPG/Network/FishNet/Games/AnyMMODemo/Scenes/AnyMMODemo/AnyMMODemo.unity
+    m_path: Assets/AnyRPG/Addons/anymmo-fishnet/Games/AnyMMODemo/Scenes/AnyMMODemo/AnyMMODemo.unity
   - m_enabled: 1
-    m_path: Assets/AnyRPG/Network/FishNet/Games/AnyMMODemo/Scenes/AnyMMODemoMainMenu/AnyMMODemoMainMenu.unity
+    m_path: Assets/AnyRPG/Addons/anymmo-fishnet/Games/AnyMMODemo/Scenes/AnyMMODemoMainMenu/AnyMMODemoMainMenu.unity
   - m_enabled: 1
-    m_path: Assets/AnyRPG/Network/FishNet/Games/AnyMMODemo/Scenes/AnyMMODemoZone/AnyMMODemoZone.unity
+    m_path: Assets/AnyRPG/Addons/anymmo-fishnet/Games/AnyMMODemo/Scenes/AnyMMODemoZone/AnyMMODemoZone.unity
   - m_enabled: 1
-    m_path: Assets/AnyRPG/Network/FishNet/Games/AnyMMODemo/Scenes/AnyMMODemoDungeon/AnyMMODemoDungeon.unity
+    m_path: Assets/AnyRPG/Addons/anymmo-fishnet/Games/AnyMMODemo/Scenes/AnyMMODemoCutsceneZone/AnyMMODemoCutsceneZone.unity
   - m_enabled: 1
-    m_path: Assets/AnyRPG/Network/FishNet/Games/AnyMMODemo/Scenes/AnyMMODemoCutsceneZone/AnyMMODemoCutsceneZone.unity
+    m_path: Assets/AnyRPG/Addons/anymmo-fishnet/Games/AnyMMODemo/Scenes/AnyMMODemoDungeon/AnyMMODemoDungeon.unity
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
