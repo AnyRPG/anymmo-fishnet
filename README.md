@@ -1,4 +1,4 @@
-# AnyMMO Fishnet Addon
+# AnyMMO FishNet Addon
 
 ## Introduction
 
