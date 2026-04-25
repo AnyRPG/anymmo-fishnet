@@ -37,6 +37,15 @@ namespace AnyRPG {
         private NetworkManagerClient networkManagerClient = null;
         private NetworkManagerServer networkManagerServer = null;
 
+        private void Awake() {
+            //Debug.Log("FishNetNetworkController.Awake()");
+            systemGameManager = GameObject.FindAnyObjectByType<SystemGameManager>();
+            if (systemGameManager == null) {
+                return;
+            }
+            Configure(systemGameManager);
+        }
+
         public override void Configure(SystemGameManager systemGameManager) {
             //Debug.Log("FishNetNetworkController.Configure()");
 
@@ -60,6 +69,10 @@ namespace AnyRPG {
             } else {
                 //Debug.Log("FishNetNetworkController.Configure() Could not find FishNet NetworkManager");
             }
+
+            // register with the game manager so it can call us back
+            systemGameManager.NetworkManagerClient.NetworkController = this;
+            systemGameManager.NetworkManagerServer.NetworkController = this;
         }
 
         public override void SetGameManagerReferences() {
