@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 242539348095147964}
   - component: {fileID: 8553593711587574172}
   m_Layer: 25
-  m_Name: DefaultInteractableUnit
+  m_Name: Interactable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showTooltip: 1
-  interactableName: Mailbox
+  interactableName: Mail
   glowOnMouseOver: 1
   glowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   interactionTooltipText: 
@@ -91,9 +91,9 @@ MonoBehaviour:
     saveOnLevelUnload: 0
     saveOnGameSave: 0
   persistInteractableData: 0
-  hasNamePlate: 1
+  hasNameplate: 1
   namePlateProps:
-    displayName: Mail
+    displayName: 
     overrideNameplatePosition: 0
     namePlatePosition: {x: 0, y: 0, z: 0}
 --- !u!114 &2088754196902026917

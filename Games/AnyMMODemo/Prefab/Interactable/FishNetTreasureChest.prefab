@@ -94,9 +94,9 @@ MonoBehaviour:
     saveOnLevelUnload: 1
     saveOnGameSave: 1
   persistInteractableData: 1
-  hasNamePlate: 1
+  hasNameplate: 0
   namePlateProps:
-    displayName: Storage Chest
+    displayName: 
     overrideNameplatePosition: 0
     namePlatePosition: {x: 0, y: 0, z: 0}
 --- !u!114 &7630189465103120001
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ff920aaeff32c47b919cdd7f10e67d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnyRPG.UUID
-  m_UUID: 386675bb-5b03-421a-acec-d08518d61686
+  m_UUID: af4f990d-73a4-4fa4-ade9-3e4ddcdfb7f4
   forceUpdateUUID: 0
 --- !u!114 &705627323346183316
 MonoBehaviour:
