@@ -99,7 +99,7 @@ namespace AnyRPG {
         }
 
         public void SpawnPlayer(int accountId, CharacterRequestData characterRequestData, Vector3 position, Vector3 forward, string sceneName) {
-            Debug.Log($"FishNetClientConnector.SpawnPlayer(accountId: {accountId}, {characterRequestData.characterConfigurationRequest.unitProfile.ResourceName}, {position}, {forward}, {sceneName})");
+            //Debug.Log($"FishNetClientConnector.SpawnPlayer(accountId: {accountId}, {characterRequestData.characterConfigurationRequest.unitProfile.ResourceName}, {position}, {forward}, {sceneName})");
 
             int clientId = networkManagerServer.GetClientIDForAccount(accountId);
             if (clientId == -1) {
