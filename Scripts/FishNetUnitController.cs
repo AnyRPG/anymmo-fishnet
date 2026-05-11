@@ -478,8 +478,8 @@ namespace AnyRPG {
             unitController.UnitEventController.OnReceiveCombatTextEvent += HandleReceiveCombatTextEventServer;
             unitController.UnitEventController.OnTakeDamage += HandleTakeDamageServer;
             unitController.UnitEventController.OnTakeFallDamage += HandleTakeFallDamageServer;
-            unitController.UnitEventController.OnImmuneToEffect += HandleImmuneToEffectServer;
-            unitController.UnitEventController.OnRecoverResource += HandleRecoverResourceServer;
+            //unitController.UnitEventController.OnImmuneToEffect += HandleImmuneToEffectServer;
+            //unitController.UnitEventController.OnRecoverResource += HandleRecoverResourceServer;
             unitController.UnitEventController.OnCurrencyChange += HandleCurrencyChangeServer;
             unitController.UnitEventController.OnLearnRecipe += HandleLearnRecipe;
             unitController.UnitEventController.OnUnlearnRecipe += HandleUnlearnRecipe;
@@ -584,8 +584,8 @@ namespace AnyRPG {
             unitController.UnitEventController.OnReceiveCombatTextEvent -= HandleReceiveCombatTextEventServer;
             unitController.UnitEventController.OnTakeDamage -= HandleTakeDamageServer;
             unitController.UnitEventController.OnTakeFallDamage += HandleTakeFallDamageServer;
-            unitController.UnitEventController.OnImmuneToEffect -= HandleImmuneToEffectServer;
-            unitController.UnitEventController.OnRecoverResource -= HandleRecoverResourceServer;
+            //unitController.UnitEventController.OnImmuneToEffect -= HandleImmuneToEffectServer;
+            //unitController.UnitEventController.OnRecoverResource -= HandleRecoverResourceServer;
             unitController.UnitEventController.OnCurrencyChange -= HandleCurrencyChangeServer;
             unitController.UnitEventController.OnLearnRecipe -= HandleLearnRecipe;
             unitController.UnitEventController.OnUnlearnRecipe -= HandleUnlearnRecipe;
@@ -1286,7 +1286,12 @@ namespace AnyRPG {
             unitController.CharacterCurrencyManager.LoadCurrencyValue(currency, amount);
         }
 
-        public void HandleRecoverResourceServer(PowerResource resource, int amount, CombatMagnitude magnitude, AbilityEffectContext context) {
+        /*
+        public void HandleRecoverResourceServer(UnitController sourceUnitController, PowerResource resource, int amount, CombatMagnitude magnitude, AbilityEffectContext context) {
+            if (UnitController != sourceUnitController) {
+                // do not pass on events for pets
+                return;
+            }
             HandleRecoverResourceClient(resource.ResourceName, amount, magnitude, context.GetSerializableContext());
         }
 
@@ -1298,8 +1303,14 @@ namespace AnyRPG {
             }
             unitController.UnitEventController.NotifyOnRecoverResource(powerResource, amount, magnitude, new AbilityEffectContext(unitController, null, context, systemGameManager));
         }
+        */
 
-        public void HandleImmuneToEffectServer(AbilityEffectContext context) {
+        /*
+        public void HandleImmuneToEffectServer(UnitController sourceUnitController, AbilityEffectContext context) {
+            if (UnitController != sourceUnitController) {
+                // do not pass on events for pets
+                return;
+            }
             HandleImmuneToEffectClient(context.GetSerializableContext());
         }
 
@@ -1307,6 +1318,7 @@ namespace AnyRPG {
         public void HandleImmuneToEffectClient(SerializableAbilityEffectContext context) {
             unitController.UnitEventController.NotifyOnImmuneToEffect(new AbilityEffectContext(unitController, null, context, systemGameManager));
         }
+        */
 
         public void HandleTakeDamageServer(IAbilityCaster sourceCaster, UnitController target, int amount, CombatTextType combatTextType, CombatMagnitude combatMagnitude, string abilityName, AbilityEffectContext context) {
             
@@ -1329,7 +1341,11 @@ namespace AnyRPG {
             unitController.UnitEventController.NotifyOnTakeDamage(sourceCaster, unitController, amount, combatTextType, combatMagnitude, abilityName, new AbilityEffectContext(unitController, null, context, systemGameManager));
         }
 
-        public void HandleTakeFallDamageServer(int damageAmount) {
+        public void HandleTakeFallDamageServer(UnitController sourceUnitController, int damageAmount) {
+            if (UnitController != sourceUnitController) {
+                // do not pass on events for pets
+                return;
+            }
             HandleTakeFallDamageClient(damageAmount);
         }
 
@@ -1338,18 +1354,18 @@ namespace AnyRPG {
             unitController.UnitEventController.NotifyOnTakeFallDamage(damageAmount);
         }
 
-        public void HandleReceiveCombatTextEventServer(UnitController targetUnitController, int amount, CombatTextType type, CombatMagnitude magnitude, AbilityEffectContext context) {
-            FishNetUnitController networkCharacterUnit = null;
-            if (targetUnitController != null) {
-                networkCharacterUnit = targetUnitController.GetComponent<FishNetUnitController>();
+        public void HandleReceiveCombatTextEventServer(Interactable targetInteractable, int amount, CombatTextType type, CombatMagnitude magnitude, AbilityEffectContext context) {
+            FishNetInteractable networkCharacterUnit = null;
+            if (targetInteractable != null) {
+                networkCharacterUnit = targetInteractable.GetComponent<FishNetInteractable>();
             }
             ReceiveCombatTextEventClient(networkCharacterUnit, amount, type, magnitude, context.GetSerializableContext());
         }
 
         [ObserversRpc]
-        public void ReceiveCombatTextEventClient(FishNetUnitController targetNetworkCharacterUnit, int amount, CombatTextType type, CombatMagnitude magnitude, SerializableAbilityEffectContext context) {
+        public void ReceiveCombatTextEventClient(FishNetInteractable targetNetworkCharacterUnit, int amount, CombatTextType type, CombatMagnitude magnitude, SerializableAbilityEffectContext context) {
             if (targetNetworkCharacterUnit != null) {
-                unitController.UnitEventController.NotifyOnReceiveCombatTextEvent(targetNetworkCharacterUnit.unitController, amount, type, magnitude, new AbilityEffectContext(unitController, null, context, systemGameManager));
+                unitController.UnitEventController.NotifyOnReceiveCombatTextEvent(targetNetworkCharacterUnit.Interactable, amount, type, magnitude, new AbilityEffectContext(unitController, null, context, systemGameManager));
             }
         }
 
@@ -1418,7 +1434,7 @@ namespace AnyRPG {
             } else {
                 abilityCaster = systemGameManager.SystemAbilityController;
             }
-            unitController.CharacterStats.AddNewStatusEffect(statusEffect.StatusEffectProperties, abilityCaster, new AbilityEffectContext(abilityCaster));
+            unitController.CharacterStats.AddNewStatusEffect(statusEffect.StatusEffectProperties, abilityCaster, new AbilityEffectContext(abilityCaster) { AbilityEffect = statusEffect.StatusEffectProperties });
         }
 
         public void HandleAddBagServer(InstantiatedBag instantiatedBag, BagNode node) {
