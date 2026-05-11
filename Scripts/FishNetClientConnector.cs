@@ -99,12 +99,18 @@ namespace AnyRPG {
         }
 
         public void SpawnPlayer(int accountId, CharacterRequestData characterRequestData, Vector3 position, Vector3 forward, string sceneName) {
-            //Debug.Log($"FishNetClientConnector.SpawnPlayer(accountId: {accountId}, {characterRequestData.characterConfigurationRequest.unitProfile.ResourceName}, {position}, {forward}, {sceneName})");
+            Debug.Log($"FishNetClientConnector.SpawnPlayer(accountId: {accountId}, {characterRequestData.characterConfigurationRequest.unitProfile.ResourceName}, {position}, {forward}, {sceneName})");
 
             int clientId = networkManagerServer.GetClientIDForAccount(accountId);
             if (clientId == -1) {
                 return;
             }
+            if (characterRequestData.characterConfigurationRequest.unitProfile == null) {
+                Debug.LogWarning($"FishNetClientConnector.SpawnPlayer(accountId: {accountId}) could not find unit profile for character {characterRequestData.characterId}");
+                networkManagerServer.KickPlayer(accountId);
+                return;
+            }
+
             NetworkConnection networkConnection = fishNetNetworkManager.ServerManager.Clients[clientId];
 
             NetworkObject nob = GetSpawnablePrefab(characterRequestData.characterConfigurationRequest.unitProfile.UnitPrefabProps.NetworkUnitPrefab, null, position, forward);
