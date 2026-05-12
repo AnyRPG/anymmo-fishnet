@@ -2586,7 +2586,7 @@ namespace AnyRPG {
         }
 
         private void CompleteCharacterRequest(bool isOwner, PlayerCharacterSaveData playerCharacterSaveData, int characterGroupId, int guildId, string guildName) {
-            //Debug.Log($"{gameObject.name}.FishNetUnitController.CompleteCharacterRequest({isOwner}, {(saveData == null ? "null" : "valid save data")})");
+            //Debug.Log($"{gameObject.name}.FishNetUnitController.CompleteCharacterRequest({isOwner}, {(playerCharacterSaveData == null ? "null" : "valid save data")})");
 
             /*
             if (base.Owner != null ) {
