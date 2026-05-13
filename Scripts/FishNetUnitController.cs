@@ -2,6 +2,7 @@ using FishNet.Component.Animating;
 using FishNet.Component.Transforming;
 using FishNet.Component.Transforming.Beta;
 using FishNet.Connection;
+using FishNet.Managing;
 using FishNet.Object;
 using FishNet.Object.Prediction;
 using FishNet.Object.Synchronizing;
@@ -959,8 +960,7 @@ namespace AnyRPG {
             }
         }
 
-
-
+        /*
         public void HandleAddActivePetServer(UnitProfile profile, UnitController petUnitController) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleAddActivePetServer({profile?.ResourceName}, {petUnitController?.gameObject.name})");
 
@@ -988,8 +988,54 @@ namespace AnyRPG {
             
             unitController.CharacterPetManager.AddActivePet(unitProfile, targetNetworkCharacterUnit.unitController);
         }
+        */
 
-        public void HandleAddPetServer(UnitProfile profile) {
+    public void HandleAddActivePetServer(UnitProfile profile, UnitController petUnitController) {
+        // Check if the component exists to ensure it is a valid network object
+        FishNetUnitController targetNetworkCharacterUnit = petUnitController.GetComponent<FishNetUnitController>();
+        if (targetNetworkCharacterUnit == null) {
+            return;
+        }
+
+        // Pass the unique integer ObjectId over the network instead of the object reference
+        HandleAddActivePetClient(profile.ResourceName, targetNetworkCharacterUnit.ObjectId);
+    }
+
+    [ObserversRpc]
+    public void HandleAddActivePetClient(string petResourceName, int petObjectId) {
+        UnitProfile unitProfile = systemDataFactory.GetResource<UnitProfile>(petResourceName);
+        if (unitProfile == null) {
+            return;
+        }
+
+        // Start a coroutine to wait for FishNet to register the object locally
+        StartCoroutine(ResolvePetAndAddCoroutine(unitProfile, petObjectId));
+    }
+
+    private IEnumerator ResolvePetAndAddCoroutine(UnitProfile unitProfile, int petObjectId) {
+        // Loop until FishNet's client object cache contains the ID
+        while (!NetworkManager.ClientManager.Objects.Spawned.ContainsKey(petObjectId)) {
+            yield return null;
+        }
+
+        // Retrieve the NetworkObject now that it safely exists on this frame
+        var netObj = NetworkManager.ClientManager.Objects.Spawned[petObjectId];
+        if (netObj == null) {
+            yield break;
+        }
+
+        // Extract your custom scripts from the resolved network object
+        FishNetUnitController targetNetworkCharacterUnit = netObj.GetComponent<FishNetUnitController>();
+        if (targetNetworkCharacterUnit?.unitController == null) {
+            yield break;
+        }
+
+        // Execute your original initialization logic
+        unitController.CharacterPetManager.AddActivePet(unitProfile, targetNetworkCharacterUnit.unitController);
+    }
+
+
+    public void HandleAddPetServer(UnitProfile profile) {
             HandleAddPetClient(profile.ResourceName);
         }
 
