@@ -475,7 +475,9 @@ namespace AnyRPG {
             unitController.UnitEventController.OnAddStatusEffectStack += HandleAddStatusEffectStackServer;
             unitController.UnitEventController.OnCancelStatusEffect += HandleCancelStatusEffectServer;
             unitController.UnitEventController.OnCombatMessage += HandleCombatMessageServer;
-            unitController.UnitEventController.OnReceiveCombatTextEvent += HandleReceiveCombatTextEventServer;
+            if (unitControllerMode.Value == UnitControllerMode.Player) {
+                unitController.UnitEventController.OnReceiveCombatTextEvent += HandleReceiveCombatTextEventServer;
+            }
             unitController.UnitEventController.OnTakeDamage += HandleTakeDamageServer;
             unitController.UnitEventController.OnTakeFallDamage += HandleTakeFallDamageServer;
             //unitController.UnitEventController.OnImmuneToEffect += HandleImmuneToEffectServer;
@@ -581,7 +583,9 @@ namespace AnyRPG {
             unitController.UnitEventController.OnAddStatusEffectStack -= HandleAddStatusEffectStackServer;
             unitController.UnitEventController.OnCancelStatusEffect -= HandleCancelStatusEffectServer;
             unitController.UnitEventController.OnCombatMessage -= HandleCombatMessageServer;
-            unitController.UnitEventController.OnReceiveCombatTextEvent -= HandleReceiveCombatTextEventServer;
+            if (unitControllerMode.Value == UnitControllerMode.Player) {
+                unitController.UnitEventController.OnReceiveCombatTextEvent -= HandleReceiveCombatTextEventServer;
+            }
             unitController.UnitEventController.OnTakeDamage -= HandleTakeDamageServer;
             unitController.UnitEventController.OnTakeFallDamage += HandleTakeFallDamageServer;
             //unitController.UnitEventController.OnImmuneToEffect -= HandleImmuneToEffectServer;
