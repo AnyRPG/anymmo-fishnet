@@ -1361,15 +1361,25 @@ namespace AnyRPG {
             if (targetInteractable != null) {
                 networkCharacterUnit = targetInteractable.GetComponent<FishNetInteractable>();
             }
-            ReceiveCombatTextEventClient(networkCharacterUnit, amount, type, magnitude, context.GetSerializableContext());
+            FishNetUnitController sourceNetworkCharacterUnit = null;
+            if (context?.AbilityCaster != null) {
+                sourceNetworkCharacterUnit = context.AbilityCaster.gameObject.GetComponent<FishNetUnitController>();
+            }
+            ReceiveCombatTextEventClient(networkCharacterUnit, sourceNetworkCharacterUnit, amount, type, magnitude, context.GetSerializableContext());
         }
 
         [ObserversRpc]
-        public void ReceiveCombatTextEventClient(FishNetInteractable targetNetworkCharacterUnit, int amount, CombatTextType type, CombatMagnitude magnitude, SerializableAbilityEffectContext context) {
+        public void ReceiveCombatTextEventClient(FishNetInteractable targetNetworkCharacterUnit, FishNetUnitController sourceNetworkCharacterUnit, int amount, CombatTextType type, CombatMagnitude magnitude, SerializableAbilityEffectContext context) {
             Debug.Log($"{gameObject.name}.FishNetUnitController.ReceiveCombatTextEventClient({targetNetworkCharacterUnit?.gameObject.name}, {amount}, {type}, {magnitude})");
             
             if (targetNetworkCharacterUnit != null) {
-                unitController.UnitEventController.NotifyOnReceiveCombatTextEvent(targetNetworkCharacterUnit.Interactable, amount, type, magnitude, new AbilityEffectContext(unitController, null, context, systemGameManager));
+                IAbilityCaster abilityCaster = null;
+                if (sourceNetworkCharacterUnit != null) {
+                    abilityCaster = sourceNetworkCharacterUnit.UnitController;
+                } else {
+                    abilityCaster = systemGameManager.SystemAbilityController;
+                }
+                unitController.UnitEventController.NotifyOnReceiveCombatTextEvent(targetNetworkCharacterUnit.Interactable, amount, type, magnitude, new AbilityEffectContext(abilityCaster, null, context, systemGameManager));
             }
         }
 
