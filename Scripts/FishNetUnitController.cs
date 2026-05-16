@@ -1405,7 +1405,7 @@ namespace AnyRPG {
         }
 
         public void HandleReceiveCombatTextEventServer(Interactable targetInteractable, int amount, CombatTextType type, CombatMagnitude magnitude, AbilityEffectContext context) {
-            Debug.Log($"{gameObject.name}.FishNetUnitController.HandleReceiveCombatTextEventServer({targetInteractable?.gameObject.name}, {amount}, {type}, {magnitude})");
+            //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleReceiveCombatTextEventServer({targetInteractable?.gameObject.name}, {amount}, {type}, {magnitude})");
 
             FishNetInteractable networkCharacterUnit = null;
             if (targetInteractable != null) {
@@ -1420,7 +1420,7 @@ namespace AnyRPG {
 
         [ObserversRpc]
         public void ReceiveCombatTextEventClient(FishNetInteractable targetNetworkCharacterUnit, FishNetUnitController sourceNetworkCharacterUnit, int amount, CombatTextType type, CombatMagnitude magnitude, SerializableAbilityEffectContext context) {
-            Debug.Log($"{gameObject.name}.FishNetUnitController.ReceiveCombatTextEventClient({targetNetworkCharacterUnit?.gameObject.name}, {amount}, {type}, {magnitude})");
+            //Debug.Log($"{gameObject.name}.FishNetUnitController.ReceiveCombatTextEventClient({targetNetworkCharacterUnit?.gameObject.name}, {amount}, {type}, {magnitude})");
             
             if (targetNetworkCharacterUnit != null) {
                 IAbilityCaster abilityCaster = null;
