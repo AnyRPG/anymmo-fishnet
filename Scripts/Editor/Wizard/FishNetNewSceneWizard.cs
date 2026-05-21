@@ -1,18 +1,11 @@
-﻿using AnyRPG;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 
 namespace AnyRPG {
     public class FishNetNewSceneWizard : NewSceneWizardBase, ICreateSceneRequestor {
 
-        private const string pathToPhysicsSceneSync = "/AnyRPG/Network/FishNet/GameManager/FishNetPhysicsSceneSync.prefab";
-        private const string portalTemplatePath = "/AnyRPG/Network/FishNet/Templates/Prefabs/Portal/FishNetStonePortal.prefab";
+        private const string pathToPhysicsSceneSync = "/AnyRPG/Addons/anymmo-fishnet/GameManager/FishNetPhysicsSceneSync.prefab";
+        private const string portalTemplatePath = "/AnyRPG/Addons/anymmo-fishnet/Templates/Prefabs/Portal/FishNetStonePortal.prefab";
 
         public static string PortalTemplatePath => portalTemplatePath;
 

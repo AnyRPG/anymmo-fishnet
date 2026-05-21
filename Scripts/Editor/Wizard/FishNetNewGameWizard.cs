@@ -1,19 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 
 namespace AnyRPG {
     public class FishNetNewGameWizard : NewGameWizardBase {
 
-        private const string pathToFishNetNetworkManagerPrefab = "/AnyRPG/Network/FishNet/GameManager/FishNetNetworkManager.prefab";
+        private const string pathToFishNetNetworkManagerPrefab = "/AnyRPG/Addons/anymmo-fishnet/GameManager/FishNetNetworkManager.prefab";
         private const string pathToNetworkChatCommandsTemplate = "/AnyRPG/Core/Content/TemplatePackages/ChatCommand/NetworkChatCommandsTemplatePackage.asset";
-        private const string pathToPlayerUnitsTemplate = "/AnyRPG/Network/FishNet/Content/TemplatePackages/UnitProfile/Player/FishNetMecanimHumanPlayerUnitsTemplatePackage.asset";
-        private const string pathToPhysicsSceneSync = "/AnyRPG/Network/FishNet/GameManager/FishNetPhysicsSceneSync.prefab";
+        private const string pathToPlayerUnitsTemplate = "/AnyRPG/Addons/anymmo-fishnet/Content/TemplatePackages/UnitProfile/Player/FishNetMecanimHumanPlayerUnitsTemplatePackage.asset";
+        private const string pathToPhysicsSceneSync = "/AnyRPG/Addons/anymmo-fishnet/GameManager/FishNetPhysicsSceneSync.prefab";
 
         public override string PathToPlayerUnitsTemplate { get => pathToPlayerUnitsTemplate; }
 

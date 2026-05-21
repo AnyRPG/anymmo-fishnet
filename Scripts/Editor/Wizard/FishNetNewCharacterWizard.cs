@@ -1,18 +1,13 @@
 ﻿using FishNet.Component.Animating;
 using FishNet.Object;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace AnyRPG.EditorTools {
     public class FishNetNewCharacterWizard: NewCharacterWizardBase {
 
-        protected const string pathToNetworkDefaultCharacterUnitPrefab = "/AnyRPG/Network/Fishnet/Prefabs/Character/Unit/NetworkDefaultCharacterUnit.prefab";
-        protected const string pathToNetworkDefaultMountUnitPrefab = "/AnyRPG/Network/Fishnet/Prefabs/Character/Unit/NetworkDefaultMountUnit.prefab";
+        protected const string pathToNetworkDefaultCharacterUnitPrefab = "/AnyRPG/Addons/anymmo-fishnet/Prefabs/Character/Unit/NetworkDefaultCharacterUnit.prefab";
+        protected const string pathToNetworkDefaultMountUnitPrefab = "/AnyRPG/Addons/anymmo-fishnet/Prefabs/Character/Unit/NetworkDefaultMountUnit.prefab";
 
         [Header("Network Settings")]
 
