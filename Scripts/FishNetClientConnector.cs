@@ -765,7 +765,7 @@ namespace AnyRPG {
             fishNetNetworkManager.ServerManager.Despawn(returnedObject);
         }
 
-        public void InteractWithOptionClient(UnitController sourceUnitController, Interactable targetInteractable, int componentIndex, int choiceIndex) {
+        public void InteractWithOptionClient(UnitController sourceUnitController, InteractableBase targetInteractable, int componentIndex, int choiceIndex) {
             FishNetUnitController networkCharacterUnit = null;
             if (sourceUnitController != null) {
                 networkCharacterUnit = sourceUnitController.GetComponent<FishNetUnitController>();
@@ -785,7 +785,7 @@ namespace AnyRPG {
             if (sourceNetworkCharacterUnit != null) {
                 sourceUnitController = sourceNetworkCharacterUnit.UnitController;
             }
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (targetNetworkInteractable != null) {
                 interactable = targetNetworkInteractable.Interactable;
             }
@@ -812,7 +812,7 @@ namespace AnyRPG {
         }
         */
 
-        public void RequestTurnInDialog(Interactable interactable, int componentIndex, Dialog dialog) {
+        public void RequestTurnInDialog(InteractableBase interactable, int componentIndex, Dialog dialog) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -828,7 +828,7 @@ namespace AnyRPG {
                 return;
             }
 
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (targetNetworkInteractable != null) {
                 interactable = targetNetworkInteractable.Interactable;
             }
@@ -853,7 +853,7 @@ namespace AnyRPG {
 
 
 
-        public void RequestSetPlayerCharacterClass(Interactable interactable, int componentIndex) {
+        public void RequestSetPlayerCharacterClass(InteractableBase interactable, int componentIndex) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -864,14 +864,14 @@ namespace AnyRPG {
         [ServerRpc(RequireOwnership = false)]
         public void RequestSetPlayerCharacterClassServer(FishNetInteractable targetNetworkInteractable, int componentIndex, NetworkConnection networkConnection = null) {
 
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (targetNetworkInteractable != null) {
                 interactable = targetNetworkInteractable.Interactable;
             }
             networkManagerServer.SetPlayerCharacterClass(interactable, componentIndex, networkConnection.ClientId);
         }
 
-        public void RequestSetPlayerCharacterSpecialization(Interactable interactable, int componentIndex) {
+        public void RequestSetPlayerCharacterSpecialization(InteractableBase interactable, int componentIndex) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -882,14 +882,14 @@ namespace AnyRPG {
         [ServerRpc(RequireOwnership = false)]
         public void RequestSetPlayerCharacterSpecializationServer(FishNetInteractable targetNetworkInteractable, int componentIndex, NetworkConnection networkConnection = null) {
 
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (targetNetworkInteractable != null) {
                 interactable = targetNetworkInteractable.Interactable;
             }
             networkManagerServer.SetPlayerCharacterSpecialization(interactable, componentIndex, networkConnection.ClientId);
         }
 
-        public void RequestSetPlayerFaction(Interactable interactable, int componentIndex) {
+        public void RequestSetPlayerFaction(InteractableBase interactable, int componentIndex) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -900,14 +900,14 @@ namespace AnyRPG {
         [ServerRpc(RequireOwnership = false)]
         public void RequestSetPlayerFactionServer(FishNetInteractable targetNetworkInteractable, int componentIndex, NetworkConnection networkConnection = null) {
 
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (targetNetworkInteractable != null) {
                 interactable = targetNetworkInteractable.Interactable;
             }
             networkManagerServer.SetPlayerFaction(interactable, componentIndex, networkConnection.ClientId);
         }
 
-        public void RequestCreateGuild(Interactable interactable, int componentIndex, string guildName) {
+        public void RequestCreateGuild(InteractableBase interactable, int componentIndex, string guildName) {
             //Debug.Log($"FishNetClientConnector.RequestCreateGuild({guildName})");
 
             FishNetInteractable networkInteractable = null;
@@ -921,14 +921,14 @@ namespace AnyRPG {
         public void RequestCreateGuildServer(FishNetInteractable targetNetworkInteractable, int componentIndex, string guildName, NetworkConnection networkConnection = null) {
             //Debug.Log($"FishNetClientConnector.RequestCreateGuildServer({guildName})");
 
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (targetNetworkInteractable != null) {
                 interactable = targetNetworkInteractable.Interactable;
             }
             networkManagerServer.RequestCreateGuild(interactable, componentIndex, guildName, networkConnection.ClientId);
         }
 
-        public void CheckGuildName(Interactable interactable, int componentIndex, string guildName) {
+        public void CheckGuildName(InteractableBase interactable, int componentIndex, string guildName) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -938,7 +938,7 @@ namespace AnyRPG {
 
         [ServerRpc(RequireOwnership = false)]
         public void CheckGuildNameServer(FishNetInteractable targetNetworkInteractable, int componentIndex, string guildName, NetworkConnection networkConnection = null) {
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (targetNetworkInteractable != null) {
                 interactable = targetNetworkInteractable.Interactable;
             }
@@ -946,7 +946,7 @@ namespace AnyRPG {
         }
 
 
-        public void RequestSendMail(Interactable interactable, int componentIndex, MailMessageRequest sendMailRequest) {
+        public void RequestSendMail(InteractableBase interactable, int componentIndex, MailMessageRequest sendMailRequest) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -958,14 +958,14 @@ namespace AnyRPG {
         [ServerRpc(RequireOwnership = false)]
         private void RequestSendMailServer(FishNetInteractable networkInteractable, int componentIndex, MailMessageRequest sendMailRequest, NetworkConnection networkConnection = null) {
 
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (networkInteractable != null) {
                 interactable = networkInteractable.Interactable;
             }
             networkManagerServer.RequestSendMail(interactable, componentIndex, sendMailRequest, networkConnection.ClientId);
         }
 
-        public void RequestListAuctionItems(Interactable interactable, int componentIndex, ListAuctionItemRequest listAuctionItemRequest) {
+        public void RequestListAuctionItems(InteractableBase interactable, int componentIndex, ListAuctionItemRequest listAuctionItemRequest) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -975,14 +975,14 @@ namespace AnyRPG {
 
         [ServerRpc(RequireOwnership = false)]
         private void RequestListAuctionItemsServer(FishNetInteractable networkInteractable, int componentIndex, ListAuctionItemRequest listAuctionItemRequest, NetworkConnection networkConnection = null) {
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (networkInteractable != null) {
                 interactable = networkInteractable.Interactable;
             }
             networkManagerServer.RequestListAuctionItems(interactable, componentIndex, listAuctionItemRequest, networkConnection.ClientId);
         }
 
-        public void RequestSearchAuctions(Interactable interactable, int componentIndex, string searchText, bool onlyShowOwnAuctions) {
+        public void RequestSearchAuctions(InteractableBase interactable, int componentIndex, string searchText, bool onlyShowOwnAuctions) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -992,7 +992,7 @@ namespace AnyRPG {
 
         [ServerRpc(RequireOwnership = false)]
         private void RequestSearchAuctionsServer(FishNetInteractable networkInteractable, int componentIndex, string searchText, bool onlyShowOwnAuctions, NetworkConnection networkConnection = null) {
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (networkInteractable != null) {
                 interactable = networkInteractable.Interactable;
             }
@@ -1001,7 +1001,7 @@ namespace AnyRPG {
 
 
 
-        public void RequestLearnSkill(Interactable interactable, int componentIndex, int skillId) {
+        public void RequestLearnSkill(InteractableBase interactable, int componentIndex, int skillId) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -1012,14 +1012,14 @@ namespace AnyRPG {
         [ServerRpc(RequireOwnership = false)]
         public void RequestLearnSkillServer(FishNetInteractable targetNetworkInteractable, int componentIndex, int skillId, NetworkConnection networkConnection = null) {
 
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (targetNetworkInteractable != null) {
                 interactable = targetNetworkInteractable.Interactable;
             }
             networkManagerServer.LearnSkill(interactable, componentIndex, skillId, networkConnection.ClientId);
         }
 
-        public void RequestAcceptQuest(Interactable interactable, int componentIndex, Quest quest) {
+        public void RequestAcceptQuest(InteractableBase interactable, int componentIndex, Quest quest) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -1035,7 +1035,7 @@ namespace AnyRPG {
                 return;
             }
 
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (targetNetworkInteractable != null) {
                 interactable = targetNetworkInteractable.Interactable;
             }
@@ -1043,7 +1043,7 @@ namespace AnyRPG {
             networkManagerServer.AcceptQuest(interactable, componentIndex, quest, networkConnection.ClientId);
         }
 
-        public void RequestCompleteQuest(Interactable interactable, int componentIndex, Quest quest, QuestRewardChoices questRewardChoices) {
+        public void RequestCompleteQuest(InteractableBase interactable, int componentIndex, Quest quest, QuestRewardChoices questRewardChoices) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -1059,7 +1059,7 @@ namespace AnyRPG {
                 return;
             }
 
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (targetNetworkInteractable != null) {
                 interactable = targetNetworkInteractable.Interactable;
             }
@@ -1067,7 +1067,7 @@ namespace AnyRPG {
             networkManagerServer.CompleteQuest(interactable, componentIndex, quest, questRewardChoices, networkConnection.ClientId);
         }
 
-        public void SellVendorItemClient(Interactable interactable, int componentIndex, long itemInstanceId) {
+        public void SellVendorItemClient(InteractableBase interactable, int componentIndex, long itemInstanceId) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -1077,14 +1077,14 @@ namespace AnyRPG {
 
         [ServerRpc(RequireOwnership = false)]
         public void SellVendorItemServer(FishNetInteractable targetNetworkInteractable, int componentIndex, long itemInstanceId, NetworkConnection networkConnection = null) {
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (targetNetworkInteractable != null) {
                 interactable = targetNetworkInteractable.Interactable;
             }
             networkManagerServer.SellVendorItem(interactable, componentIndex, itemInstanceId, networkConnection.ClientId);
         }
 
-        public void RequestSpawnUnit(Interactable interactable, int componentIndex, int unitLevel, int extraLevels, bool useDynamicLevel, string unitProfileName, string unitToughnessName) {
+        public void RequestSpawnUnit(InteractableBase interactable, int componentIndex, int unitLevel, int extraLevels, bool useDynamicLevel, string unitProfileName, string unitToughnessName) {
             //Debug.Log($"FishNetClientConnector.RequestSpawnUnit({interactable.gameObject.name}, {componentIndex}, {unitLevel}, {extraLevels}, {useDynamicLevel}, {unitProfileName}, {unitToughnessName})");
 
             FishNetInteractable networkInteractable = null;
@@ -1098,7 +1098,7 @@ namespace AnyRPG {
         public void RequestSpawnUnitServer(FishNetInteractable targetNetworkInteractable, int componentIndex, int unitLevel, int extraLevels, bool useDynamicLevel, string unitProfileName, string unitToughnessName, NetworkConnection networkConnection = null) {
             //Debug.Log($"FishNetClientConnector.RequestSpawnUnitServer({componentIndex}, {unitLevel}, {extraLevels}, {useDynamicLevel}, {unitProfileName}, {unitToughnessName})");
 
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (targetNetworkInteractable != null) {
                 interactable = targetNetworkInteractable.Interactable;
             }
@@ -1110,7 +1110,7 @@ namespace AnyRPG {
             networkManagerServer.RequestSpawnUnit(interactable, componentIndex, unitLevel, extraLevels, useDynamicLevel, unitProfile, unitToughness, networkConnection.ClientId);
         }
 
-        public void BuyItemFromVendor(Interactable interactable, int componentIndex, int collectionIndex, int itemIndex, string resourceName) {
+        public void BuyItemFromVendor(InteractableBase interactable, int componentIndex, int collectionIndex, int itemIndex, string resourceName) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -1121,7 +1121,7 @@ namespace AnyRPG {
         [ServerRpc(RequireOwnership = false)]
         public void BuyItemFromVendorServer(FishNetInteractable targetNetworkInteractable, int componentIndex, int collectionIndex, int itemIndex, string resourceName, NetworkConnection networkConnection = null) {
 
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (targetNetworkInteractable != null) {
                 interactable = targetNetworkInteractable.Interactable;
             }
@@ -1168,7 +1168,7 @@ namespace AnyRPG {
             networkManagerClient.AdvertiseSystemMessage(message);
         }
 
-        public void AdvertiseAddToBuyBackCollection(UnitController sourceUnitController, int accountId, Interactable interactable, int componentIndex, InstantiatedItem newInstantiatedItem) {
+        public void AdvertiseAddToBuyBackCollection(UnitController sourceUnitController, int accountId, InteractableBase interactable, int componentIndex, InstantiatedItem newInstantiatedItem) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -1288,7 +1288,7 @@ namespace AnyRPG {
             networkManagerServer.RequestCancelCrafting(networkConnection.ClientId);
         }
 
-        public void RequestUpdatePlayerAppearance(Interactable interactable, int componentIndex, string unitProfileName, string appearanceString, List<SwappableMeshSaveData> swappableMeshSaveData) {
+        public void RequestUpdatePlayerAppearance(InteractableBase interactable, int componentIndex, string unitProfileName, string appearanceString, List<SwappableMeshSaveData> swappableMeshSaveData) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -1299,14 +1299,14 @@ namespace AnyRPG {
         [ServerRpc(RequireOwnership = false)]
         public void RequestUpdatePlayerAppearanceServer(FishNetInteractable targetNetworkInteractable, int componentIndex, string unitProfileName, string appearanceString, List<SwappableMeshSaveData> swappableMeshSaveData, NetworkConnection networkConnection = null) {
 
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (targetNetworkInteractable != null) {
                 interactable = targetNetworkInteractable.Interactable;
             }
             networkManagerServer.RequestUpdatePlayerAppearance(networkConnection.ClientId, interactable, componentIndex, unitProfileName, appearanceString, swappableMeshSaveData);
         }
 
-        public void RequestChangePlayerName(Interactable interactable, int componentIndex, string newName) {
+        public void RequestChangePlayerName(InteractableBase interactable, int componentIndex, string newName) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -1317,7 +1317,7 @@ namespace AnyRPG {
         [ServerRpc(RequireOwnership = false)]
         public void RequestChangePlayerNameServer(FishNetInteractable targetNetworkInteractable, int componentIndex, string newName, NetworkConnection networkConnection = null) {
 
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (targetNetworkInteractable != null) {
                 interactable = targetNetworkInteractable.Interactable;
             }
@@ -2441,7 +2441,7 @@ namespace AnyRPG {
             networkManagerClient.AdvertiseListAuctionItems();
         }
 
-        public void AdvertiseOpenInteractionWindow(int accountId, Interactable interactable) {
+        public void AdvertiseOpenInteractionWindow(int accountId, InteractableBase interactable) {
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
                 networkInteractable = interactable.GetComponent<FishNetInteractable>();
@@ -2462,7 +2462,7 @@ namespace AnyRPG {
             networkManagerClient.AdvertiseOpenInteractionWindow(networkInteractable.Interactable);
         }
 
-        public void RequestInteractWithInteractable(Interactable targetInteractable) {
+        public void RequestInteractWithInteractable(InteractableBase targetInteractable) {
             FishNetInteractable networkInteractable = null;
             if (targetInteractable != null) {
                 networkInteractable = targetInteractable.GetComponent<FishNetInteractable>();

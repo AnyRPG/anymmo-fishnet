@@ -1,9 +1,4 @@
-using FishNet.Connection;
-using FishNet.Managing.Scened;
 using FishNet.Object;
-using FishNet.Transporting;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace AnyRPG {

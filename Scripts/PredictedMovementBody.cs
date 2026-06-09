@@ -1,5 +1,4 @@
 using UnityEngine;
-using FishNet.Component.Prediction;
 using FishNet.Object.Prediction;
 
 namespace AnyRPG {
