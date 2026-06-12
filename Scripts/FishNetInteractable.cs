@@ -158,7 +158,7 @@ namespace AnyRPG {
             interactable.InteractableEventController.OnSetDroppedItems -= HandleSetDroppedItems;
             interactable.InteractableEventController.OnRemoveItemFromStorageContainerSlot -= HandleRemoveItemFromStorageContainerSlot;
             interactable.InteractableEventController.OnAddItemToStorageContainerSlot -= HandleAddItemToStorageContainerSlot;
-
+            interactable.InteractableEventController.OnUnlock -= HandleUnlock;
 
             eventRegistrationComplete = false;
         }
@@ -170,6 +170,7 @@ namespace AnyRPG {
         [ObserversRpc]
         private void HandleUnlockClient() {
             // Handle unlock logic on the client side
+            interactable.Unlock();
         }
 
         private void HandleAddItemToStorageContainerSlot(int slotIndex, long itemInstanceId) {
