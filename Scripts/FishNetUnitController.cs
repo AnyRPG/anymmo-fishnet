@@ -7,7 +7,6 @@ using FishNet.Object;
 using FishNet.Object.Prediction;
 using FishNet.Object.Synchronizing;
 using FishNet.Transporting;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -1080,7 +1079,7 @@ namespace AnyRPG {
             unitController.CharacterQuestLog.AcceptQuestItemQuest(instantiatedItem as InstantiatedQuestStartItem, quest);
         }
 
-        private void HandleRequestFollowAttackTarget(Interactable interactable, float attackRange) {
+        private void HandleRequestFollowAttackTarget(InteractableBase interactable, float attackRange) {
             FishNetInteractable targetNetworkInteractable = interactable.GetComponent<FishNetInteractable>();
             if (targetNetworkInteractable == null) {
                 return;
@@ -1093,7 +1092,7 @@ namespace AnyRPG {
             unitController.UnitMotor.FollowAttackTarget(targetNetworkInteractable.Interactable, attackRange);
         }
 
-        private void HandleRequestFollowInteractionTarget(Interactable interactable) {
+        private void HandleRequestFollowInteractionTarget(InteractableBase interactable) {
             FishNetInteractable targetNetworkInteractable = interactable.GetComponent<FishNetInteractable>();
             if (targetNetworkInteractable == null) {
                 return;
@@ -1404,7 +1403,7 @@ namespace AnyRPG {
             unitController.UnitEventController.NotifyOnTakeFallDamage(damageAmount);
         }
 
-        public void HandleReceiveCombatTextEventServer(Interactable targetInteractable, int amount, CombatTextType type, CombatMagnitude magnitude, AbilityEffectContext context) {
+        public void HandleReceiveCombatTextEventServer(InteractableBase targetInteractable, int amount, CombatTextType type, CombatMagnitude magnitude, AbilityEffectContext context) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleReceiveCombatTextEventServer({targetInteractable?.gameObject.name}, {amount}, {type}, {magnitude})");
 
             FishNetInteractable networkCharacterUnit = null;
@@ -1818,7 +1817,7 @@ namespace AnyRPG {
                 Debug.LogWarning($"{gameObject.name}.FishNetUnitController.HandleRequestMoveItemToStorageContainerServer: interactable is null");
                 return;
             }
-            Interactable interactable = fishNetInteractable.Interactable;
+            InteractableBase interactable = fishNetInteractable.Interactable;
             if (interactable == null) {
                 Debug.LogWarning($"{gameObject.name}.FishNetUnitController.HandleRequestMoveItemToStorageContainerServer: interactable component is null");
                 return;
@@ -1844,7 +1843,7 @@ namespace AnyRPG {
                 Debug.LogWarning($"{gameObject.name}.FishNetUnitController.HandleRequestMoveItemToStorageContainerServer: interactable is null");
                 return;
             }
-            Interactable interactable = fishNetInteractable.Interactable;
+            InteractableBase interactable = fishNetInteractable.Interactable;
             if (interactable == null) {
                 Debug.LogWarning($"{gameObject.name}.FishNetUnitController.HandleRequestMoveItemToStorageContainerServer: interactable component is null");
                 return;
@@ -1871,7 +1870,7 @@ namespace AnyRPG {
                 Debug.LogWarning($"{gameObject.name}.FishNetUnitController.HandleRequestMoveItemFromStorageContainerServer: interactable is null");
                 return;
             }
-            Interactable interactable = fishNetInteractable.Interactable;
+            InteractableBase interactable = fishNetInteractable.Interactable;
             if (interactable == null) {
                 Debug.LogWarning($"{gameObject.name}.FishNetUnitController.HandleRequestMoveItemFromStorageContainerServer: interactable component is null");
                 return;
@@ -1886,7 +1885,7 @@ namespace AnyRPG {
         }
 
 
-        private void HandleRequestSwapItemsInStorageContainerSlots(Interactable interactable, int fromSlotIndex, int toSlotIndex) {
+        private void HandleRequestSwapItemsInStorageContainerSlots(InteractableBase interactable, int fromSlotIndex, int toSlotIndex) {
             FishNetInteractable fishNetInteractable = interactable.GetComponent<FishNetInteractable>();
             if (fishNetInteractable != null) {
                 HandleRequestSwapItemsInStorageContainerSlotsServer(fishNetInteractable, fromSlotIndex, toSlotIndex);
@@ -1899,7 +1898,7 @@ namespace AnyRPG {
                 Debug.LogWarning($"{gameObject.name}.FishNetUnitController.HandleRequestSwapItemsInStorageContainerSlotsServer: interactable is null");
                 return;
             }
-            Interactable interactable = fishNetInteractable.Interactable;
+            InteractableBase interactable = fishNetInteractable.Interactable;
             if (interactable == null) {
                 Debug.LogWarning($"{gameObject.name}.FishNetUnitController.HandleRequestSwapItemsInStorageContainerSlotsServer: interactable component is null");
                 return;
@@ -2276,7 +2275,7 @@ namespace AnyRPG {
             }
         }
 
-        private void HandleEnterInteractableRangeServer(UnitController controller, Interactable interactable) {
+        private void HandleEnterInteractableRangeServer(UnitController controller, InteractableBase interactable) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleEnterInteractableRangeServer(controller: {controller?.gameObject.name} interactable: {interactable?.gameObject.name})");
 
             FishNetInteractable networkInteractable = null;
@@ -2290,14 +2289,14 @@ namespace AnyRPG {
         private void HandleEnterInteractableRangeClient(FishNetInteractable networkInteractable) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleEnterInteractableRangeClient(networkInteractable: {networkInteractable?.gameObject.name})");
 
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (networkInteractable != null) {
                 interactable = networkInteractable.Interactable;
             }
             unitController.EnterInteractableRange(interactable);
         }
 
-        private void HandleExitInteractableRangeServer(UnitController controller, Interactable interactable) {
+        private void HandleExitInteractableRangeServer(UnitController controller, InteractableBase interactable) {
 
             FishNetInteractable networkInteractable = null;
             if (interactable != null) {
@@ -2308,7 +2307,7 @@ namespace AnyRPG {
 
         [ObserversRpc]
         private void HandleExitInteractableRangeClient(FishNetInteractable networkInteractable) {
-            Interactable interactable = null;
+            InteractableBase interactable = null;
             if (networkInteractable != null) {
                 interactable = networkInteractable.Interactable;
             }
@@ -2353,7 +2352,7 @@ namespace AnyRPG {
         }
 
         /*
-        private void HandleEnterInteractableTriggerServer(Interactable triggerInteractable) {
+        private void HandleEnterInteractableTriggerServer(InteractableBase triggerInteractable) {
             NetworkInteractable networkTarget = null;
             if (triggerInteractable != null) {
                 networkTarget = triggerInteractable.GetComponent<NetworkInteractable>();
@@ -2364,7 +2363,7 @@ namespace AnyRPG {
 
         [ObserversRpc]
         public void HandleEnterInteractableTriggerClient(FishNetInteractable networkInteractable) {
-            Interactable triggerInteractable = null;
+            InteractableBase triggerInteractable = null;
             if (networkInteractable != null) {
                 triggerInteractable = networkInteractable.Interactable;
             }
@@ -2399,7 +2398,7 @@ namespace AnyRPG {
             unitController.UnitEventController.NotifyOnGainXP(gainedXP, currentXP);
         }
 
-        public void HandleSpawnAbilityEffectPrefabsServer(Interactable target, Interactable originalTarget, LengthEffectProperties lengthEffectProperties, AbilityEffectContext abilityEffectContext) {
+        public void HandleSpawnAbilityEffectPrefabsServer(InteractableBase target, InteractableBase originalTarget, LengthEffectProperties lengthEffectProperties, AbilityEffectContext abilityEffectContext) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleSpawnAbilityEffectPrefabsServer()");
 
             FishNetInteractable networkTarget = null;
@@ -2425,8 +2424,8 @@ namespace AnyRPG {
             if (fixedLengthEffectProperties == null) {
                 return;
             }
-            Interactable target = null;
-            Interactable originalTarget = null;
+            InteractableBase target = null;
+            InteractableBase originalTarget = null;
             if (networkTarget != null) {
                 target = networkTarget.Interactable;
             }
@@ -2436,7 +2435,7 @@ namespace AnyRPG {
             unitController.CharacterAbilityManager.SpawnAbilityEffectPrefabs(target, originalTarget, fixedLengthEffectProperties, new AbilityEffectContext(unitController, originalTarget, serializableAbilityEffectContext, systemGameManager));
         }
 
-        public void HandleSpawnProjectileEffectPrefabsServer(Interactable target, Interactable originalTarget, ProjectileEffectProperties projectileEffectProperties, AbilityEffectContext abilityEffectContext) {
+        public void HandleSpawnProjectileEffectPrefabsServer(InteractableBase target, InteractableBase originalTarget, ProjectileEffectProperties projectileEffectProperties, AbilityEffectContext abilityEffectContext) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleSpawnProjectileEffectPrefabsServer({target?.gameObject.name}, {originalTarget?.gameObject.name}, {projectileEffectProperties.ResourceName})");
 
             FishNetInteractable networkTarget = null;
@@ -2462,8 +2461,8 @@ namespace AnyRPG {
             if (projectileEffectProperties == null) {
                 return;
             }
-            Interactable target = null;
-            Interactable originalTarget = null;
+            InteractableBase target = null;
+            InteractableBase originalTarget = null;
             if (networkTarget != null) {
                 target = networkTarget.Interactable;
             }
@@ -2473,7 +2472,7 @@ namespace AnyRPG {
             unitController.CharacterAbilityManager.SpawnProjectileEffectPrefabs(target, originalTarget, projectileEffectProperties, new AbilityEffectContext(unitController, originalTarget, serializableAbilityEffectContext, systemGameManager));
         }
 
-        public void HandleSpawnChanneledEffectPrefabsServer(Interactable target, Interactable originalTarget, ChanneledEffectProperties channeledEffectProperties, AbilityEffectContext abilityEffectContext) {
+        public void HandleSpawnChanneledEffectPrefabsServer(InteractableBase target, InteractableBase originalTarget, ChanneledEffectProperties channeledEffectProperties, AbilityEffectContext abilityEffectContext) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleSpawnChanneledEffectPrefabsServer({target?.gameObject.name}, {originalTarget?.gameObject.name}, {channeledEffectProperties.ResourceName})");
 
             FishNetInteractable networkTarget = null;
@@ -2499,8 +2498,8 @@ namespace AnyRPG {
             if (channeledEffectProperties == null) {
                 return;
             }
-            Interactable target = null;
-            Interactable originalTarget = null;
+            InteractableBase target = null;
+            InteractableBase originalTarget = null;
             if (networkTarget != null) {
                 target = networkTarget.Interactable;
             }
@@ -2602,7 +2601,7 @@ namespace AnyRPG {
         }
 
 
-        private void HandleClearTargetClient(Interactable oldTarget) {
+        private void HandleClearTargetClient(InteractableBase oldTarget) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleClearTargetClient(" + (oldTarget == null ? "null" : oldTarget.gameObject.name) + ")");
 
             /*
@@ -2625,7 +2624,7 @@ namespace AnyRPG {
         }
 
 
-        private void HandleSetTargetClient(Interactable target) {
+        private void HandleSetTargetClient(InteractableBase target) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleSetTargetClient({(target == null ? "null" : target.gameObject.name)})");
 
             FishNetInteractable networkInteractable = null;
@@ -2806,7 +2805,7 @@ namespace AnyRPG {
         }
         */
 
-        public void HandleBeginAbilityLocal(AbilityProperties abilityProperties, Interactable target, bool playerInitiated) {
+        public void HandleBeginAbilityLocal(AbilityProperties abilityProperties, InteractableBase target, bool playerInitiated) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleBeginAbilityLocal({abilityProperties.ResourceName})");
 
 
@@ -2825,9 +2824,9 @@ namespace AnyRPG {
             if (baseAbility == null) {
                 return;
             }
-            Interactable targetInteractable = null;
+            InteractableBase targetInteractable = null;
             if (targetNetworkInteractable != null) {
-                targetInteractable = targetNetworkInteractable.GetComponent<Interactable>();
+                targetInteractable = targetNetworkInteractable.GetComponent<InteractableBase>();
             }
             unitController.CharacterAbilityManager.BeginAbility(baseAbility.AbilityProperties, targetInteractable, playerInitiated);
         }

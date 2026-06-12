@@ -500,31 +500,31 @@ namespace AnyRPG {
             clientConnector.ToggleLobbyGameReadyStatus(gameId);
         }
 
-        public override void InteractWithOption(UnitController sourceUnitController, Interactable targetInteractable, int componentIndex, int choiceIndex) {
+        public override void InteractWithOption(UnitController sourceUnitController, InteractableBase targetInteractable, int componentIndex, int choiceIndex) {
             clientConnector.InteractWithOptionClient(sourceUnitController, targetInteractable, componentIndex, choiceIndex);
         }
 
-        public override void RequestInteractWithInteractable(Interactable target) {
+        public override void RequestInteractWithInteractable(InteractableBase target) {
             clientConnector.RequestInteractWithInteractable(target);
         }
 
-        public override void RequestSetPlayerCharacterClass(Interactable interactable, int componentIndex) {
+        public override void RequestSetPlayerCharacterClass(InteractableBase interactable, int componentIndex) {
             clientConnector.RequestSetPlayerCharacterClass(interactable, componentIndex);
         }
 
-        public override void SetPlayerCharacterSpecialization(Interactable interactable, int componentIndex) {
+        public override void SetPlayerCharacterSpecialization(InteractableBase interactable, int componentIndex) {
             clientConnector.RequestSetPlayerCharacterSpecialization(interactable, componentIndex);
         }
 
-        public override void RequestSetPlayerFaction(Interactable interactable, int componentIndex) {
+        public override void RequestSetPlayerFaction(InteractableBase interactable, int componentIndex) {
             clientConnector.RequestSetPlayerFaction(interactable, componentIndex);
         }
 
-        public override void RequestCreateGuild(Interactable interactable, int componentIndex, string guildName) {
+        public override void RequestCreateGuild(InteractableBase interactable, int componentIndex, string guildName) {
             clientConnector.RequestCreateGuild(interactable, componentIndex, guildName);
         }
 
-        public override void CheckGuildName(Interactable interactable, int componentIndex, string guildName) {
+        public override void CheckGuildName(InteractableBase interactable, int componentIndex, string guildName) {
             clientConnector.CheckGuildName(interactable, componentIndex, guildName);
         }
 
@@ -532,41 +532,41 @@ namespace AnyRPG {
             clientConnector.AcceptFriendInvite(inviteCharacterId);
         }
 
-        public override void RequestLearnSkill(Interactable interactable, int componentIndex, int skillId) {
+        public override void RequestLearnSkill(InteractableBase interactable, int componentIndex, int skillId) {
             clientConnector.RequestLearnSkill(interactable, componentIndex, skillId);
         }
 
-        public override void RequestSendMail(Interactable interactable, int componentIndex, MailMessageRequest sendMailRequest) {
+        public override void RequestSendMail(InteractableBase interactable, int componentIndex, MailMessageRequest sendMailRequest) {
             clientConnector.RequestSendMail(interactable, componentIndex, sendMailRequest);
         }
 
-        public override void RequestListAuctionItems(Interactable interactable, int componentIndex, ListAuctionItemRequest listAuctionItemRequest) {
+        public override void RequestListAuctionItems(InteractableBase interactable, int componentIndex, ListAuctionItemRequest listAuctionItemRequest) {
             clientConnector.RequestListAuctionItems(interactable, componentIndex, listAuctionItemRequest);
         }
 
-        public override void RequestSearchAuctions(Interactable interactable, int componentIndex, string searchText, bool onlyShowOwnAuctions) {
+        public override void RequestSearchAuctions(InteractableBase interactable, int componentIndex, string searchText, bool onlyShowOwnAuctions) {
             clientConnector.RequestSearchAuctions(interactable, componentIndex, searchText, onlyShowOwnAuctions);
         }
 
-        public override void RequestAcceptQuest(Interactable interactable, int componentIndex, Quest quest) {
+        public override void RequestAcceptQuest(InteractableBase interactable, int componentIndex, Quest quest) {
             clientConnector.RequestAcceptQuest(interactable, componentIndex, quest);
         }
 
-        public override void RequestCompleteQuest(Interactable interactable, int componentIndex, Quest quest, QuestRewardChoices questRewardChoices) {
+        public override void RequestCompleteQuest(InteractableBase interactable, int componentIndex, Quest quest, QuestRewardChoices questRewardChoices) {
             clientConnector.RequestCompleteQuest(interactable, componentIndex, quest, questRewardChoices);
         }
 
-        public override void SellVendorItem(Interactable interactable, int componentIndex, long itemInstanceId) {
+        public override void SellVendorItem(InteractableBase interactable, int componentIndex, long itemInstanceId) {
             clientConnector.SellVendorItemClient(interactable, componentIndex, itemInstanceId);
         }
 
-        public override void RequestSpawnUnit(Interactable interactable, int componentIndex, int unitLevel, int extraLevels, bool useDynamicLevel, string unitProfileName, string unitToughnessName) {
+        public override void RequestSpawnUnit(InteractableBase interactable, int componentIndex, int unitLevel, int extraLevels, bool useDynamicLevel, string unitProfileName, string unitToughnessName) {
             //Debug.Log($"FishNetNetworkController.RequestSpawnUnit({unitProfileName}) {interactable.gameObject.name} {componentIndex} {unitLevel} {extraLevels} {useDynamicLevel} {unitToughnessName}");
 
             clientConnector.RequestSpawnUnit(interactable, componentIndex, unitLevel, extraLevels, useDynamicLevel, unitProfileName, unitToughnessName);
         }
 
-        public override void RequestTurnInDialog(Interactable interactable, int componentIndex, Dialog dialog) {
+        public override void RequestTurnInDialog(InteractableBase interactable, int componentIndex, Dialog dialog) {
             //Debug.Log($"FishNetNetworkController.RequestTurnInDialog({dialog.ResourceName})");
 
             clientConnector.RequestTurnInDialog(interactable, componentIndex, dialog);
@@ -578,7 +578,7 @@ namespace AnyRPG {
             clientConnector.RequestTurnInQuestDialog(dialog);
         }
 
-        public override void BuyItemFromVendor(Interactable interactable, int componentIndex, int collectionIndex, int itemIndex, string resourceName) {
+        public override void BuyItemFromVendor(InteractableBase interactable, int componentIndex, int collectionIndex, int itemIndex, string resourceName) {
             clientConnector.BuyItemFromVendor(interactable, componentIndex, collectionIndex, itemIndex, resourceName);
         }
 
@@ -602,11 +602,11 @@ namespace AnyRPG {
             clientConnector.RequestCancelCrafting();
         }
 
-        public override void RequestUpdatePlayerAppearance(Interactable interactable, int componentIndex, string unitProfileName, string appearanceString, List<SwappableMeshSaveData> swappableMeshSaveData) {
+        public override void RequestUpdatePlayerAppearance(InteractableBase interactable, int componentIndex, string unitProfileName, string appearanceString, List<SwappableMeshSaveData> swappableMeshSaveData) {
             clientConnector.RequestUpdatePlayerAppearance(interactable, componentIndex, unitProfileName, appearanceString, swappableMeshSaveData);
         }
 
-        public override void RequestChangePlayerName(Interactable interactable, int componentIndex, string newName) {
+        public override void RequestChangePlayerName(InteractableBase interactable, int componentIndex, string newName) {
            //Debug.Log($"FishNetNetworkController.RequestChangePlayerName({newName})");
 
             clientConnector.RequestChangePlayerName(interactable, componentIndex, newName);
@@ -1104,7 +1104,7 @@ namespace AnyRPG {
         }
 
         /*
-        public override void AdvertiseInteractWithQuestGiver(Interactable interactable, int optionIndex, int accountId) {
+        public override void AdvertiseInteractWithQuestGiver(InteractableBase interactable, int optionIndex, int accountId) {
 
             NetworkInteractable networkInteractable = null;
             if (interactable != null) {
@@ -1121,15 +1121,15 @@ namespace AnyRPG {
         */
 
         /*
-        public override void AdvertiseInteractWithClassChangeComponentServer(int accountId, Interactable interactable, int optionIndex) {
+        public override void AdvertiseInteractWithClassChangeComponentServer(int accountId, InteractableBase interactable, int optionIndex) {
             clientConnector.AdvertiseInteractWithClassChangeComponentServer(accountId, interactable, optionIndex);
         }
 
-        public override void AdvertiseInteractWithSkillTrainerComponentServer(int accountId, Interactable interactable, int optionIndex) {
+        public override void AdvertiseInteractWithSkillTrainerComponentServer(int accountId, InteractableBase interactable, int optionIndex) {
             clientConnector.AdvertiseInteractWithSkillTrainerComponentServer(accountId, interactable, optionIndex);
         }
 
-        public override void AdvertiseInteractWithAnimatedObjectComponentServer(int accountId, Interactable interactable, int optionIndex) {
+        public override void AdvertiseInteractWithAnimatedObjectComponentServer(int accountId, InteractableBase interactable, int optionIndex) {
             clientConnector.AdvertiseInteractWithAnimatedObjectComponentServer(accountId, interactable, optionIndex);
         }
         */
@@ -1153,11 +1153,11 @@ namespace AnyRPG {
             clientConnector.AdvertiseSystemMessage(accountId, message);
         }
 
-        public override void AdvertiseAddToBuyBackCollection(UnitController sourceUnitController, int accountId, Interactable interactable, int componentIndex, InstantiatedItem newInstantiatedItem) {
+        public override void AdvertiseAddToBuyBackCollection(UnitController sourceUnitController, int accountId, InteractableBase interactable, int componentIndex, InstantiatedItem newInstantiatedItem) {
             clientConnector.AdvertiseAddToBuyBackCollection(sourceUnitController, accountId, interactable, componentIndex, newInstantiatedItem);
         }
 
-        public override void AdvertiseOpenInteractionWindow(int accountId, Interactable targetInteractable) {
+        public override void AdvertiseOpenInteractionWindow(int accountId, InteractableBase targetInteractable) {
             clientConnector.AdvertiseOpenInteractionWindow(accountId, targetInteractable);
         }
 

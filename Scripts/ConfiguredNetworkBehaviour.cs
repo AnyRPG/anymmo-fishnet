@@ -1,6 +1,4 @@
-using AnyRPG;
 using FishNet.Object;
-using UnityEngine;
 
 namespace AnyRPG {
     public abstract class ConfiguredNetworkBehaviour : NetworkBehaviour {

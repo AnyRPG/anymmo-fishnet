@@ -1,9 +1,5 @@
-using FishNet.Component.Transforming;
 using FishNet.Connection;
 using FishNet.Object;
-using FishNet.Object.Synchronizing;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,7 +8,7 @@ using UnityEngine;
 namespace AnyRPG {
     public class FishNetInteractable : SpawnedNetworkObject {
 
-        private Interactable interactable = null;
+        private InteractableBase interactable = null;
 
         private bool eventRegistrationComplete = false;
 
@@ -23,7 +19,7 @@ namespace AnyRPG {
         protected SystemItemManager systemItemManager = null;
         protected AuthenticationService authenticationService = null;
 
-        public Interactable Interactable { get => interactable; }
+        public InteractableBase Interactable { get => interactable; }
 
         protected virtual void Awake() {
             //Debug.Log($"{gameObject.name}.FishNetInteractable.Awake() position: { gameObject.transform.position}");
@@ -36,7 +32,7 @@ namespace AnyRPG {
             systemItemManager = systemGameManager.SystemItemManager;
             authenticationService = systemGameManager.AuthenticationService;
             
-            interactable = GetComponent<Interactable>();
+            interactable = GetComponent<InteractableBase>();
             if (interactable == null) { 
                 Debug.LogError($"{gameObject.name}.FishNetInteractable.Configure(): no interactable found on object");
             }
@@ -123,6 +119,7 @@ namespace AnyRPG {
             interactable.InteractableEventController.OnSetDroppedItems += HandleSetDroppedItems;
             interactable.InteractableEventController.OnRemoveItemFromStorageContainerSlot += HandleRemoveItemFromStorageContainerSlot;
             interactable.InteractableEventController.OnAddItemToStorageContainerSlot += HandleAddItemToStorageContainerSlot;
+            interactable.InteractableEventController.OnUnlock += HandleUnlock;
 
             eventRegistrationComplete = true;
         }
@@ -161,9 +158,19 @@ namespace AnyRPG {
             interactable.InteractableEventController.OnSetDroppedItems -= HandleSetDroppedItems;
             interactable.InteractableEventController.OnRemoveItemFromStorageContainerSlot -= HandleRemoveItemFromStorageContainerSlot;
             interactable.InteractableEventController.OnAddItemToStorageContainerSlot -= HandleAddItemToStorageContainerSlot;
-
+            interactable.InteractableEventController.OnUnlock -= HandleUnlock;
 
             eventRegistrationComplete = false;
+        }
+
+        private void HandleUnlock() {
+            HandleUnlockClient();
+        }
+
+        [ObserversRpc]
+        private void HandleUnlockClient() {
+            // Handle unlock logic on the client side
+            interactable.Unlock();
         }
 
         private void HandleAddItemToStorageContainerSlot(int slotIndex, long itemInstanceId) {
@@ -282,7 +289,7 @@ namespace AnyRPG {
             }
         }
 
-        public void AdvertiseSellItemToPlayerClient(UnitController sourceUnitController, Interactable interactable, int componentIndex, int collectionIndex, int itemIndex, string resourceName, int remainingQuantity) {
+        public void AdvertiseSellItemToPlayerClient(UnitController sourceUnitController, InteractableBase interactable, int componentIndex, int collectionIndex, int itemIndex, string resourceName, int remainingQuantity) {
             Dictionary<int, InteractableOptionComponent> currentInteractables = interactable.GetCurrentInteractables(sourceUnitController);
             if (currentInteractables[componentIndex] is VendorComponent) {
                 VendorComponent vendorComponent = (currentInteractables[componentIndex] as VendorComponent);
