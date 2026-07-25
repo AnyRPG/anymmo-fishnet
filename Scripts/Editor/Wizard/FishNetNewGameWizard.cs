@@ -12,9 +12,9 @@ namespace AnyRPG {
 
         public override string PathToPlayerUnitsTemplate { get => pathToPlayerUnitsTemplate; }
 
-        [MenuItem("Tools/AnyRPG/Wizard/FishNet/New Game Wizard")]
+        [MenuItem("Tools/AnyRPG/Wizard/New Game/New Online Game Wizard (FishNet)")]
         public static void CreateWizard() {
-            ScriptableWizard.DisplayWizard<FishNetNewGameWizard>("FishNet New Game Wizard", "Create");
+            ScriptableWizard.DisplayWizard<FishNetNewGameWizard>("New Online Game Wizard (FishNet)", "Create");
         }
 
         

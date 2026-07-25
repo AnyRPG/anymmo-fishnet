@@ -14,9 +14,9 @@ namespace AnyRPG.EditorTools {
         [SerializeField]
         public bool isMount = false;
 
-        [MenuItem("Tools/AnyRPG/Wizard/FishNet/New Character Wizard")]
+        [MenuItem("Tools/AnyRPG/Wizard/New Character/New Online Character Wizard (FishNet)")]
         public static void CreateWizard() {
-            ScriptableWizard.DisplayWizard<FishNetNewCharacterWizard>("FishNet New Character Wizard", "Create");
+            ScriptableWizard.DisplayWizard<FishNetNewCharacterWizard>("New Online Character Wizard (FishNet)", "Create");
         }
 
         public override void ModifyModelPrefab(GameObject modelPrefab) {

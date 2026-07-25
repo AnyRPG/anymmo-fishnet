@@ -9,9 +9,9 @@ namespace AnyRPG {
 
         public static string PortalTemplatePath => portalTemplatePath;
 
-        [MenuItem("Tools/AnyRPG/Wizard/FishNet/New Scene Wizard")]
+        [MenuItem("Tools/AnyRPG/Wizard/New Scene/New Online Scene Wizard (FishNet)")]
         public static void CreateWizard() {
-            ScriptableWizard.DisplayWizard<FishNetNewSceneWizard>("FishNet New Scene Wizard", "Create");
+            ScriptableWizard.DisplayWizard<FishNetNewSceneWizard>("New Online Scene Wizard (FishNet)", "Create");
         }
 
         public override void ModifyScene() {
