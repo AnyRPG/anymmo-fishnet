@@ -20,6 +20,7 @@ MonoBehaviour:
   useRegionalDescription: 0
   resourceDescriptionProfile: 
   optionalOverride: 0
+  hasNameplate: 1
   suppressNameplateFaction: 1
   automaticPrefabProfile: 0
   prefabProfileName: 
@@ -124,16 +125,8 @@ MonoBehaviour:
     forceRotateModelMode: 0
     namePlateProps:
       displayName: 
-      suppressFaction: 1
       overrideNameplatePosition: 0
-      namePlatePosition: {x: 0, y: 0, z: 0}
-      useSnapShot: 0
-      unitFrameTarget: head
-      unitFrameCameraLookOffset: {x: 0, y: 0, z: 0}
-      unitFrameCameraPositionOffset: {x: 0, y: 0, z: 0.66}
-      unitPreviewTarget: 
-      unitPreviewCameraLookOffset: {x: 0, y: 1, z: 0}
-      unitPreviewCameraPositionOffset: {x: 0, y: 1, z: 2.5}
+      nameplatePosition: {x: 0, y: 0, z: 0}
     unitFrameProps:
       useSnapShot: 0
       unitFrameTarget: head
@@ -165,7 +158,7 @@ MonoBehaviour:
   spawnDead: 0
   preventAutoDespawn: 0
   defaultToughness: 
-  voiceProfile: 
+  voiceProfile: Male NPC
   useInlineVoiceProps: 0
   voiceProps:
     aggro: []
@@ -220,6 +213,7 @@ MonoBehaviour:
   interactableOptions: []
   inlineInteractableOptions:
   - rid: 0
+  - rid: 8666080779069816894
   persistObjectPosition: 0
   saveOnLevelUnload: 0
   saveOnGameSave: 0
@@ -236,6 +230,17 @@ MonoBehaviour:
         interactionPanelTitle: 
         interactionPanelImage: {fileID: 0}
         namePlateImage: {fileID: 0}
+        hideOnMiniMap: 0
         prerequisiteConditions: []
         skillNames:
         - Logging
+    - rid: 8666080779069816894
+      type: {class: VendorProps, ns: AnyRPG, asm: Assembly-CSharp}
+      data:
+        interactionPanelTitle: 
+        interactionPanelImage: {fileID: 0}
+        namePlateImage: {fileID: 0}
+        hideOnMiniMap: 0
+        prerequisiteConditions: []
+        vendorCollectionNames:
+        - Logging Items
