@@ -87,7 +87,11 @@ namespace AnyRPG
             //Debug.Log("FishNetPasswordAuthenticator.OnPasswordBroadcst()");
 
             // NEW: Check if the server is ready before doing ANYTHING else
-            if (!systemGameManager.ServerDataService.IsServerDataLoaded()) {
+            bool fileLobby = systemGameManager.NetworkManagerServer.ServerMode == NetworkServerMode.Lobby
+                && systemGameManager.SystemConfigurationManager.ServerBackend == ServerBackend.File;
+            bool ready = fileLobby ? systemGameManager.UserAccountService.AccountsLoaded
+                : systemGameManager.ServerDataService.IsServerDataLoaded();
+            if (!ready) {
                 NetworkManager.Log($"Client {conn.ClientId} attempted to login, but server data is still loading. Disconnecting.");
 
                 // You might want to send a specific "Server Starting" broadcast here 
