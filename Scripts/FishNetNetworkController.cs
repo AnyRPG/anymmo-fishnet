@@ -302,7 +302,16 @@ namespace AnyRPG {
             //Debug.Log($"FishNetNetworkController.HandleLoadEnd() AsServer: {obj.QueueData.AsServer}");
 
             if (systemGameManager.GameMode == GameMode.Network) {
-                levelManagerClient.PerformNetworkLevelLoadActivities(obj.LoadedScenes[0]);
+                UnityEngine.SceneManagement.Scene loadedScene = default;
+                if (obj.LoadedScenes != null && obj.LoadedScenes.Length > 0) {
+                    loadedScene = obj.LoadedScenes[0];
+                } else if (obj.QueueData.SceneLoadData != null && obj.QueueData.SceneLoadData.SceneLookupDatas.Length > 0) {
+                    // host: the server already loaded the scene, so the client load end reports no newly loaded scenes
+                    loadedScene = obj.QueueData.SceneLoadData.SceneLookupDatas[0].GetScene(out _);
+                }
+                if (loadedScene.IsValid()) {
+                    levelManagerClient.PerformNetworkLevelLoadActivities(loadedScene);
+                }
             }
 
         }

@@ -43,6 +43,12 @@ namespace AnyRPG {
 
             base.OnStartClient();
 
+            if (base.IsServerInitialized == true) {
+                // host: OnStartServer already configured this shared object; configuring it again as a client
+                // reloads save data and model requests on the same instance
+                return;
+            }
+
             Configure();
             if (systemGameManager == null) {
                 return;
@@ -167,7 +173,7 @@ namespace AnyRPG {
             HandleUnlockClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleUnlockClient() {
             // Handle unlock logic on the client side
             interactable.Unlock();
@@ -177,7 +183,7 @@ namespace AnyRPG {
             HandleAddItemToStorageContainerSlotClient(slotIndex, itemInstanceId);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleAddItemToStorageContainerSlotClient(int slotIndex, long   itemInstanceId) {
             Dictionary<int, InteractableOptionComponent> currentInteractables = interactable.Interactables;
             foreach (KeyValuePair<int, InteractableOptionComponent> kvp in currentInteractables) {
@@ -192,7 +198,7 @@ namespace AnyRPG {
             HandleRemoveItemFromStorageContainerSlotClient(slotIndex, itemInstanceId);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleRemoveItemFromStorageContainerSlotClient(int slotIndex, long itemInstanceId) {
             Dictionary<int, InteractableOptionComponent> currentInteractables = interactable.Interactables;
             foreach (KeyValuePair<int, InteractableOptionComponent> kvp in currentInteractables) {
@@ -215,7 +221,7 @@ namespace AnyRPG {
             HandleSetDroppedItemsClient(droppedItemNetworkData);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleSetDroppedItemsClient(DroppedItemNetworkData droppedItemNetworkData) {
             //Debug.Log($"{gameObject.name}.FishNetInteractable.HandleSetDroppedItemsClient()");
 
@@ -240,7 +246,7 @@ namespace AnyRPG {
             HandleActivatableObjectSetActiveClient(active);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleActivatableObjectSetActiveClient(bool active) {
             //Debug.Log($"{gameObject.name}.FishNetInteractable.HandleActivatableObjectSetActiveClient({active})");
 
@@ -261,7 +267,7 @@ namespace AnyRPG {
             HandleLootableNodeSpawnObjectSetActiveClient(active);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleLootableNodeSpawnObjectSetActiveClient(bool active) {
             Dictionary<int, InteractableOptionComponent> currentInteractables = interactable.Interactables;
             foreach (KeyValuePair<int, InteractableOptionComponent> kvp in currentInteractables) {
@@ -280,7 +286,7 @@ namespace AnyRPG {
             HandleSellItemToPlayerClient(item.ItemName, item.Quantity, componentIndex, collectionIndex, itemIndex);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleSellItemToPlayerClient(string resourceName, int remainingQuantity, int componentIndex, int collectionIndex, int itemIndex) {
             Dictionary<int, InteractableOptionComponent> currentInteractables = interactable.Interactables;
             if (currentInteractables[componentIndex] is VendorComponent) {
@@ -309,7 +315,7 @@ namespace AnyRPG {
             HandleMiniMapStatusUpdateClient(component.GetOptionIndex());
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleMiniMapStatusUpdateClient(int componentIndex) {
             //Debug.Log($"{gameObject.name}.FishNetInteractable.HandleMiniMapStatusUpdateClient({componentIndex})");
 
@@ -329,7 +335,7 @@ namespace AnyRPG {
             HandlePlayVoiceSoundClient(clip.name);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandlePlayVoiceSoundClient(string clipName) {
             AudioClip clip = systemGameManager.AudioManager.GetAudioClip(clipName);
             if (clip != null) {
@@ -341,7 +347,7 @@ namespace AnyRPG {
             HandleStopVoiceSoundClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleStopVoiceSoundClient() {
             interactable.InteractableEventController.NotifyOnStopVoiceSound();
         }
@@ -353,7 +359,7 @@ namespace AnyRPG {
             HandlePlayEffectSoundClient(audioClip.name, loop);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandlePlayEffectSoundClient(string clipName, bool loop) {
             AudioClip clip = systemGameManager.AudioManager.GetAudioClip(clipName);
             if (clip != null) {
@@ -365,7 +371,7 @@ namespace AnyRPG {
             HandleStopEffectSoundClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleStopEffectSoundClient() {
             interactable.InteractableEventController.NotifyOnStopEffectSound();
         }
@@ -377,7 +383,7 @@ namespace AnyRPG {
             HandlePlayCastSoundClient(audioClip.name, loop);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandlePlayCastSoundClient(string clipName, bool loop) {
             AudioClip clip = systemGameManager.AudioManager.GetAudioClip(clipName);
             if (clip != null) {
@@ -389,7 +395,7 @@ namespace AnyRPG {
             HandleStopCastSoundClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleStopCastSoundClient() {
             interactable.InteractableEventController.NotifyOnStopCastSound();
         }
@@ -401,7 +407,7 @@ namespace AnyRPG {
             HandlePlayMovementSoundClient(audioClip.name, loop);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandlePlayMovementSoundClient(string clipName, bool loop) {
             AudioClip clip = systemGameManager.AudioManager.GetAudioClip(clipName);
             if (clip != null) {
@@ -413,7 +419,7 @@ namespace AnyRPG {
             HandleStopMovementSoundClient(stopLoops);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleStopMovementSoundClient(bool stopLoops) {
             interactable.InteractableEventController.NotifyOnStopMovementSound(stopLoops);
         }
@@ -433,7 +439,7 @@ namespace AnyRPG {
             //unitController.UnitEventController.OnBeginChatMessage -= HandleBeginChatMessageServer;
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandlePlayDialogNode(string dialogName, int dialogIndex) {
             //Debug.Log($"{gameObject.name}.FishNetInteractable.HandlePlayDialogNode({dialogName}, {dialogIndex})");
 
@@ -451,7 +457,7 @@ namespace AnyRPG {
             HandleAnimatedObjectChooseMovementClient(targetNetworkCharacterUnit, optionIndex);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleAnimatedObjectChooseMovementClient(NetworkCharacterUnit sourceNetworkCharacterUnit, int optionIndex) {
             UnitController sourceUnitController = null;
             if (sourceNetworkCharacterUnit != null) {
@@ -553,6 +559,10 @@ namespace AnyRPG {
         private void HandleSpawnServerClient(NetworkConnection networkConnection, InteractableSaveData interactableSaveData) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleSpawnServerClient()");
 
+            if (base.IsServerInitialized == true) {
+                // host: the server already loaded this save data onto the shared object
+                return;
+            }
             interactable.LoadInteractableSaveData(interactableSaveData);
         }
 

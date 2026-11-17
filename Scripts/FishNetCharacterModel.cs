@@ -113,6 +113,12 @@ namespace AnyRPG {
 
             base.OnStartClient();
 
+            if (base.IsServerInitialized == true) {
+                // host: OnStartServer already configured this shared object; configuring it again as a client
+                // reloads save data and model requests on the same instance
+                return;
+            }
+
             isClient = true;
             offlineTickSmoother = GetComponent<OfflineTickSmoother>();
             FindGameManager();

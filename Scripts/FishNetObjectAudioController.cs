@@ -30,6 +30,8 @@ namespace AnyRPG {
             objectAudioController = GetComponent<ObjectAudioController>();
             if (objectAudioController != null) {
                 objectAudioController.SetServerModeActive(networkManagerServer.ServerModeActive);
+                // host mode: the server object is also the host's client object, so it must be audible when there is a local player
+                objectAudioController.SetMuteCheck(() => systemGameManager.HasLocalPlayer == false);
             } else {
                 Debug.LogError($"{gameObject.name}.FishNetObjectAudioController.Configure(): ObjectAudioController is null");
             }
@@ -143,7 +145,9 @@ namespace AnyRPG {
             HandleUnPauseAudioClient();
         }
 
-        [ObserversRpc]
+        // ExcludeServer: on a host the server already played this on the shared object; re-running it on the host client
+        // would re-raise the event the server forwards, sending the RPC again every tick
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleUnPauseAudioClient() {
             //Debug.Log($"{gameObject.name}.FishNetObjectAudioController.HandleUnPauseAudioClient()");
 
@@ -156,7 +160,9 @@ namespace AnyRPG {
             HandlePauseAudioClient();
         }
 
-        [ObserversRpc]
+        // ExcludeServer: on a host the server already played this on the shared object; re-running it on the host client
+        // would re-raise the event the server forwards, sending the RPC again every tick
+        [ObserversRpc(ExcludeServer = true)]
         public void HandlePauseAudioClient() {
             //Debug.Log($"{gameObject.name}.FishNetObjectAudioController.HandlePauseAudioClient()");
 
@@ -169,7 +175,9 @@ namespace AnyRPG {
             HandleStopAudioClient();
         }
 
-        [ObserversRpc]
+        // ExcludeServer: on a host the server already played this on the shared object; re-running it on the host client
+        // would re-raise the event the server forwards, sending the RPC again every tick
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleStopAudioClient() {
             //Debug.Log($"{gameObject.name}.FishNetObjectAudioController.HandleStopAudioClient()");
 
@@ -182,7 +190,9 @@ namespace AnyRPG {
             HandlePlayOneShotClient(clip.name);
         }
 
-        [ObserversRpc]
+        // ExcludeServer: on a host the server already played this on the shared object; re-running it on the host client
+        // would re-raise the event the server forwards, sending the RPC again every tick
+        [ObserversRpc(ExcludeServer = true)]
         public void HandlePlayOneShotClient(string clipName) {
             //Debug.Log($"{gameObject.name}.FishNetObjectAudioController.HandlePlayOneShotClient({clipName})");
 
@@ -198,7 +208,9 @@ namespace AnyRPG {
             HandlePlayAudioClipClient(clip.name);
         }
 
-        [ObserversRpc]
+        // ExcludeServer: on a host the server already played this on the shared object; re-running it on the host client
+        // would re-raise the event the server forwards, sending the RPC again every tick
+        [ObserversRpc(ExcludeServer = true)]
         public void HandlePlayAudioClipClient(string clipName) {
             //Debug.Log($"{gameObject.name}.FishNetObjectAudioController.HandlePlayAudioClipClient({clipName})");
 
