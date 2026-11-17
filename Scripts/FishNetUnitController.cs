@@ -85,6 +85,12 @@ namespace AnyRPG {
 
             base.OnStartClient();
 
+            if (base.IsServerInitialized == true) {
+                // host: OnStartServer already configured this shared object; configuring it again as a client
+                // reloads save data and model requests on the same instance
+                return;
+            }
+
             Configure();
             if (systemGameManager == null) {
                 return;
@@ -267,6 +273,12 @@ namespace AnyRPG {
         [TargetRpc]
         private void HandleSpawnServerUnitClient(NetworkConnection networkConnection, FishNetSpawnClientRequest fishNetSpawnClientRequest) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleSpawnServerClient() owner: {base.OwnerId}");
+
+            if (base.IsServerInitialized == true) {
+                // host: OnStartServer already configured this shared object; configuring it again as a client
+                // reloads save data and model requests on the same instance
+                return;
+            }
 
             if (unitControllerMode.Value == UnitControllerMode.Player
                 || unitControllerMode.Value == UnitControllerMode.Pet
@@ -629,7 +641,7 @@ namespace AnyRPG {
             HandleAddSkillExperienceClient(skill.ResourceName, experienceValue);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleAddSkillExperienceClient(string skillResourceName, int experienceValue) {
             Skill skill = systemDataFactory.GetResource<Skill>(skillResourceName);
             if (skill == null) {
@@ -642,7 +654,7 @@ namespace AnyRPG {
             HandleAddSkillLevelClient(skill.ResourceName, addLevel);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleAddSkillLevelClient(string skillResourceName, int addLevel) {
             Skill skill = systemDataFactory.GetResource<Skill>(skillResourceName);
             if (skill == null) {
@@ -658,7 +670,7 @@ namespace AnyRPG {
             HandleRiderMountedClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleRiderMountedClient() {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleRiderMountedClient()");
 
@@ -675,7 +687,7 @@ namespace AnyRPG {
             }
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleSetRiderClient(FishNetUnitController riderNetworkCharacterUnit) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleSetRiderClient({(riderNetworkCharacterUnit == null ? "null" : riderNetworkCharacterUnit.gameObject.name)})");
             
@@ -683,12 +695,12 @@ namespace AnyRPG {
         }
         */
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleSetGroupId(int newGroupId) {
             unitController.CharacterGroupManager.SetGroupId(newGroupId);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleSetGuildId(int newGuildId, string guildName) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleSetGuildId({newGuildId},{guildName})");
 
@@ -733,7 +745,7 @@ namespace AnyRPG {
             HandleDialogCompletedClient(dialog.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleDialogCompletedClient(string dialogResourceName) {
             Dialog dialog = systemDataFactory.GetResource<Dialog>(dialogResourceName);
             if (dialog == null) {
@@ -748,7 +760,7 @@ namespace AnyRPG {
             HandleWriteMessageFeedMessageClient(messageText);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleWriteMessageFeedMessageClient(string messageText) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleWriteMessageFeedMessageClient({messageText})");
 
@@ -762,7 +774,7 @@ namespace AnyRPG {
             HandleDespawnMountUnitClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleDespawnMountUnitClient() {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleDespawnMountUnitClient()");
 
@@ -775,7 +787,7 @@ namespace AnyRPG {
             //HandleMountUnitSpawnClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleMountUnitSpawnClient() {
             if (base.IsOwner == true) {
                 unitController.UnitMountManager.HandleMountUnitSpawn();
@@ -852,7 +864,7 @@ namespace AnyRPG {
             HandleDeactivateMountedStateClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleDeactivateMountedStateClient() {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleDeactivateMountedState()");
 
@@ -865,7 +877,7 @@ namespace AnyRPG {
             HandleDespawnActionObjectsClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleDespawnActionObjectsClient() {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleDespawnActionObjectsClient()");
 
@@ -876,7 +888,7 @@ namespace AnyRPG {
             HandleSpawnActionObjectsClient(animatedAction.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleSpawnActionObjectsClient(string animatedActionResourceName) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleSpawnActionObjectsClient({animatedActionResourceName})");
 
@@ -894,7 +906,7 @@ namespace AnyRPG {
             HandleDeactivateAutoAttackClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleDeactivateAutoAttackClient() {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleActivateAutoAttackClient()");
 
@@ -907,7 +919,7 @@ namespace AnyRPG {
             HandleActivateAutoAttackClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleActivateAutoAttackClient() {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleActivateAutoAttackClient()");
 
@@ -972,7 +984,7 @@ namespace AnyRPG {
             HandleAddActivePetClient(profile.ResourceName, targetNetworkCharacterUnit);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleAddActivePetClient(string petResourceName, FishNetUnitController targetNetworkCharacterUnit) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleAddActivePetClient({petResourceName}, {targetNetworkCharacterUnit?.gameObject.name})");
             
@@ -1000,7 +1012,7 @@ namespace AnyRPG {
         HandleAddActivePetClient(profile.ResourceName, targetNetworkCharacterUnit.ObjectId);
     }
 
-    [ObserversRpc]
+    [ObserversRpc(ExcludeServer = true)]
     public void HandleAddActivePetClient(string petResourceName, int petObjectId) {
         UnitProfile unitProfile = systemDataFactory.GetResource<UnitProfile>(petResourceName);
         if (unitProfile == null) {
@@ -1038,7 +1050,7 @@ namespace AnyRPG {
             HandleAddPetClient(profile.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleAddPetClient(string petResourceName) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleAddPetClient({petResourceName})");
             
@@ -1051,7 +1063,7 @@ namespace AnyRPG {
             HandleNameChangeClient(newName);
         }
         
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleNameChangeClient(string newName) {
             unitController.BaseCharacter.ChangeCharacterName(newName);
         }
@@ -1229,7 +1241,7 @@ namespace AnyRPG {
             UnSetGamepadActionButtonClient(buttonIndex);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void UnSetGamepadActionButtonClient(int buttonIndex) {
             unitController.CharacterActionBarManager.UnSetGamepadActionButton(buttonIndex);
         }
@@ -1238,7 +1250,7 @@ namespace AnyRPG {
             UnSetMouseActionButtonClient(buttonIndex);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void UnSetMouseActionButtonClient(int buttonIndex) {
             unitController.CharacterActionBarManager.UnSetMouseActionButton(buttonIndex);
         }
@@ -1247,7 +1259,7 @@ namespace AnyRPG {
             SetMouseActionButtonClient(useable.ResourceName, useable is InstantiatedItem, buttonIndex);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void SetMouseActionButtonClient(string useableName, bool isItem, int buttonIndex) {
             IUseable useable = null;
             if (isItem) {
@@ -1265,7 +1277,7 @@ namespace AnyRPG {
             SetGamepadActionButtonClient(useable.ResourceName, useable is InstantiatedItem, buttonIndex);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void SetGamepadActionButtonClient(string useableName, bool isItem, int buttonIndex) {
             IUseable useable = null;
             if (isItem) {
@@ -1283,7 +1295,7 @@ namespace AnyRPG {
             HandleSetReputationAmountClient(faction.ResourceName, amount);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleSetReputationAmountClient(string factionName, float amount) {
             Faction faction = systemDataFactory.GetResource<Faction>(factionName);
             if (faction == null) {
@@ -1296,7 +1308,7 @@ namespace AnyRPG {
             HandleUnlearnRecipeClient(recipe.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleUnlearnRecipeClient(string recipeName) {
             Recipe recipe = systemDataFactory.GetResource<Recipe>(recipeName);
             if (recipe == null) {
@@ -1309,7 +1321,7 @@ namespace AnyRPG {
             HandleLearnRecipeClient(recipe.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleLearnRecipeClient(string recipeName) {
             Recipe recipe = systemDataFactory.GetResource<Recipe>(recipeName);
             if (recipe == null) {
@@ -1324,7 +1336,7 @@ namespace AnyRPG {
             HandleCurrencyChangeClient(currencyResourceName, amount);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleCurrencyChangeClient(string currencyResourceName, int amount) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleCurrencyChangeClient({currencyResourceName}, {amount})");
 
@@ -1344,7 +1356,7 @@ namespace AnyRPG {
             HandleRecoverResourceClient(resource.ResourceName, amount, magnitude, context.GetSerializableContext());
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleRecoverResourceClient(string resourceName, int amount, CombatMagnitude magnitude, SerializableAbilityEffectContext context) {
             PowerResource powerResource = systemDataFactory.GetResource<PowerResource>(resourceName);
             if (powerResource == null) {
@@ -1363,7 +1375,7 @@ namespace AnyRPG {
             HandleImmuneToEffectClient(context.GetSerializableContext());
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleImmuneToEffectClient(SerializableAbilityEffectContext context) {
             unitController.UnitEventController.NotifyOnImmuneToEffect(new AbilityEffectContext(unitController, null, context, systemGameManager));
         }
@@ -1379,7 +1391,7 @@ namespace AnyRPG {
             HandleTakeDamageClient(networkCharacterUnit, amount, combatTextType, combatMagnitude, abilityName, context.GetSerializableContext());
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleTakeDamageClient(FishNetUnitController sourceNetworkCharacterUnit, int amount, CombatTextType combatTextType, CombatMagnitude combatMagnitude, string abilityName, SerializableAbilityEffectContext context) {
             IAbilityCaster sourceCaster = null;
             if (sourceNetworkCharacterUnit == null) {
@@ -1398,7 +1410,7 @@ namespace AnyRPG {
             HandleTakeFallDamageClient(damageAmount);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleTakeFallDamageClient(int damageAmount) {
             unitController.UnitEventController.NotifyOnTakeFallDamage(damageAmount);
         }
@@ -1417,7 +1429,7 @@ namespace AnyRPG {
             ReceiveCombatTextEventClient(networkCharacterUnit, sourceNetworkCharacterUnit, amount, type, magnitude, context.GetSerializableContext());
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void ReceiveCombatTextEventClient(FishNetInteractable targetNetworkCharacterUnit, FishNetUnitController sourceNetworkCharacterUnit, int amount, CombatTextType type, CombatMagnitude magnitude, SerializableAbilityEffectContext context) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.ReceiveCombatTextEventClient({targetNetworkCharacterUnit?.gameObject.name}, {amount}, {type}, {magnitude})");
             
@@ -1436,7 +1448,7 @@ namespace AnyRPG {
             HandleCombatMessageClient(message);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleCombatMessageClient(string message) {
             unitController.UnitEventController.NotifyOnCombatMessage(message);
         }
@@ -1447,7 +1459,7 @@ namespace AnyRPG {
             CancelStatusEffectClient(statusEffectProperties.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void CancelStatusEffectClient(string resourceName) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.CancelStatusEffectClient({resourceName})");
 
@@ -1464,7 +1476,7 @@ namespace AnyRPG {
             AddStatusEffectStackClient(resourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void AddStatusEffectStackClient(string resourceName) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.AddStatusEffectStackClient({resourceName})");
 
@@ -1483,7 +1495,7 @@ namespace AnyRPG {
             AddStatusEffectClient(statusEffectNode.StatusEffect.ResourceName, sourceNetworkCharacterUnit);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void AddStatusEffectClient(string resourceName, FishNetUnitController sourceNetworkCharacterUnit) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.AddStatusEffectClient({resourceName}, {sourceNetworkCharacterUnit?.gameObject.name})");
 
@@ -1506,7 +1518,7 @@ namespace AnyRPG {
             HandleAddBagClient(instantiatedBag.InstanceId, node.NodeIndex, node.IsBankNode);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleAddBagClient(long itemInstanceId, int nodeIndex, bool isBankNode) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleAddBagClient({itemInstanceId}, {nodeIndex}, {isBankNode})");
 
@@ -1528,7 +1540,7 @@ namespace AnyRPG {
             HandleRemoveBagClient(bag.InstanceId);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleRemoveBagClient(long itemInstanceId) {
             if (systemItemManager.InstantiatedItems.ContainsKey(itemInstanceId) && systemItemManager.InstantiatedItems[itemInstanceId] is InstantiatedBag) {
                 unitController.CharacterInventoryManager.RemoveBag(systemItemManager.InstantiatedItems[itemInstanceId] as InstantiatedBag, true);
@@ -1539,7 +1551,7 @@ namespace AnyRPG {
             HandleRebuildModelAppearanceClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleRebuildModelAppearanceClient() {
             unitController.UnitModelController.RebuildModelAppearance();
         }
@@ -1548,7 +1560,7 @@ namespace AnyRPG {
             HandleCastTimeChangedClient(abilityProperties.ResourceName, castPercent);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleCastTimeChangedClient(string abilityName, float castPercent) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleCastTimeChangedClient({abilityName}, {castPercent})");
 
@@ -1560,7 +1572,7 @@ namespace AnyRPG {
             HandleCastCompleteClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleCastCompleteClient() {
             unitController.UnitEventController.NotifyOnCastComplete();
         }
@@ -1569,7 +1581,7 @@ namespace AnyRPG {
             HandleCastCancelClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleCastCancelClient() {
             unitController.UnitEventController.NotifyOnCastCancel();
         }
@@ -1578,7 +1590,7 @@ namespace AnyRPG {
             HandleAddToCraftingQueueClient(recipe.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleAddToCraftingQueueClient(string recipeName) {
             Recipe recipe = systemDataFactory.GetResource<Recipe>(recipeName);
             if (recipe == null) {
@@ -1591,7 +1603,7 @@ namespace AnyRPG {
             HandleClearCraftingQueueClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleClearCraftingQueueClient() {
             unitController.CharacterCraftingManager.ClearCraftingQueue();
         }
@@ -1600,7 +1612,7 @@ namespace AnyRPG {
             HandleRemoveFirstCraftingQueueItemClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleRemoveFirstCraftingQueueItemClient() {
             unitController.CharacterCraftingManager.RemoveFirstQueueItem();
         }
@@ -1609,7 +1621,7 @@ namespace AnyRPG {
             HandleCraftItemClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleCraftItemClient() {
             unitController.UnitEventController.NotifyOnCraftItem();
         }
@@ -1618,7 +1630,7 @@ namespace AnyRPG {
             HandleSetCraftAbilityClient(abilityProperties.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleSetCraftAbilityClient(string craftAbilityName) {
             CraftAbility craftAbility = systemDataFactory.GetResource<Ability>(craftAbilityName) as CraftAbility;
             if (craftAbility == null) {
@@ -1634,7 +1646,7 @@ namespace AnyRPG {
             AddItemToInventorySlotClient(slotIndex, item.InstanceId);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void AddItemToInventorySlotClient(int slotIndex, long itemInstanceId) {
             //Debug.Log($"{unitController.gameObject.name}.FishNetUnitController.AddItemToInventorySlotClient({slotIndex}, {itemInstanceId})");
 
@@ -1650,7 +1662,7 @@ namespace AnyRPG {
 
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void RemoveItemFromInventorySlotClient(int slotIndex, long itemInstanceId) {
             //Debug.Log($"{unitController.gameObject.name}.FishNetUnitController.RemoveItemFromInventorySlotClient({slotIndex}, {itemInstanceId})");
 
@@ -1663,7 +1675,7 @@ namespace AnyRPG {
             AddItemToBankSlotClient(slot.GetCurrentBankSlotIndex(unitController), item.InstanceId);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void AddItemToBankSlotClient(int slotIndex, long itemInstanceId) {
             if (systemItemManager.InstantiatedItems.ContainsKey(itemInstanceId)) {
                 unitController.CharacterInventoryManager.AddBankItem(systemItemManager.InstantiatedItems[itemInstanceId], slotIndex);
@@ -1674,7 +1686,7 @@ namespace AnyRPG {
             RemoveItemFromBankSlotClient(slot.GetCurrentBankSlotIndex(unitController), item.InstanceId);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void RemoveItemFromBankSlotClient(int slotIndex, long itemInstanceId) {
             if (systemItemManager.InstantiatedItems.ContainsKey(itemInstanceId)) {
                 unitController.CharacterInventoryManager.RemoveBankItem(systemItemManager.InstantiatedItems[itemInstanceId], slotIndex);
@@ -1685,7 +1697,7 @@ namespace AnyRPG {
             HandleRemoveEquipmentClient(profile.ResourceName, equipment.InstanceId);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleRemoveEquipmentClient(string equipmentSlotProfileName, long itemInstanceId) {
             if (systemItemManager.InstantiatedItems.ContainsKey(itemInstanceId) && systemItemManager.InstantiatedItems[itemInstanceId] is InstantiatedEquipment) {
                 EquipmentSlotProfile equipmentSlotProfile = systemDataFactory.GetResource<EquipmentSlotProfile>(equipmentSlotProfileName);
@@ -1703,7 +1715,7 @@ namespace AnyRPG {
             HandleAddEquipmentClient(profile.ResourceName, equipment.InstanceId);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleAddEquipmentClient(string equipmentSlotProfileName, long itemInstanceId) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleAddEquipmentClient({equipmentSlotProfileName}, {itemInstanceId})");
 
@@ -2092,7 +2104,7 @@ namespace AnyRPG {
         */
 
         /*
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleDeleteItemClient(long itemInstanceId) {
             unitController.CharacterInventoryManager.DeleteItem(itemInstanceId);
         }
@@ -2105,7 +2117,7 @@ namespace AnyRPG {
             HandleGetNewInstantiatedItemClient(itemInstanceSaveData);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleGetNewInstantiatedItemClient(ItemInstanceSaveData itemInstanceSaveData) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleGetNewInstantiatedItemClient({itemInstanceSaveData.ItemInstanceId}, {itemInstanceSaveData.ItemName}");
             
@@ -2116,7 +2128,7 @@ namespace AnyRPG {
             HandleMarkQuestCompleteClient(quest.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleMarkQuestCompleteClient(string questName) {
             Quest quest = systemDataFactory.GetResource<Quest>(questName);
             if (quest == null) {
@@ -2129,7 +2141,7 @@ namespace AnyRPG {
             HandleMarkAchievementCompleteClient(achievement.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleMarkAchievementCompleteClient(string resourceName) {
             Achievement achievement = systemDataFactory.GetResource<Achievement>(resourceName);
             if (achievement == null) {
@@ -2143,7 +2155,7 @@ namespace AnyRPG {
             HandleQuestObjectiveStatusUpdatedClient(questBase.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleQuestObjectiveStatusUpdatedClient(string questName) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleQuestObjectiveStatusUpdatedClient({questName})");
 
@@ -2159,7 +2171,7 @@ namespace AnyRPG {
             HandleAchievementObjectiveStatusUpdatedClient(achievement.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleAchievementObjectiveStatusUpdatedClient(string resourceName) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleAchievementObjectiveStatusUpdatedClient({resourceName})");
 
@@ -2172,12 +2184,12 @@ namespace AnyRPG {
         }
 
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleSetQuestObjectiveCurrentAmount(string questName, string objectiveType, string objectiveName, int amount) {
             unitController.CharacterQuestLog.SetQuestObjectiveCurrentAmount(questName, objectiveType, objectiveName, amount);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleSetAchievementObjectiveCurrentAmount(string questName, string objectiveType, string objectiveName, int amount) {
             unitController.CharacterQuestLog.SetAchievementObjectiveCurrentAmount(questName, objectiveType, objectiveName, amount);
         }
@@ -2186,7 +2198,7 @@ namespace AnyRPG {
             HandleLearnSkillClient(skill.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleLearnSkillClient(string skillName) {
             Skill skill = systemDataFactory.GetResource<Skill>(skillName);
             if (skill != null) {
@@ -2198,7 +2210,7 @@ namespace AnyRPG {
             HandleUnLearnSkillClient(skill.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleUnLearnSkillClient(string skillName) {
             Skill skill = systemDataFactory.GetResource<Skill>(skillName);
             if (skill != null) {
@@ -2210,7 +2222,7 @@ namespace AnyRPG {
             HandleAcceptQuestClient(quest.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleAcceptQuestClient(string questName) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleAcceptQuestClient({questName})");
 
@@ -2224,7 +2236,7 @@ namespace AnyRPG {
             HandleAcceptAchievementClient(achievement.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleAcceptAchievementClient(string resourceName) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleAcceptQuestClient({resourceName})");
 
@@ -2239,7 +2251,7 @@ namespace AnyRPG {
             HandleAbandonQuestClient(quest.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleAbandonQuestClient(string questName) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleAbandonQuestClient({questName})");
 
@@ -2253,7 +2265,7 @@ namespace AnyRPG {
             HandleTurnInQuestClient(quest.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleTurnInQuestClient(string questName) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleTurnInQuestClient({questName})");
 
@@ -2267,7 +2279,7 @@ namespace AnyRPG {
             HandleRemoveQuestClient(quest.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleRemoveQuestClient(string questName) {
             Quest quest = systemDataFactory.GetResource<Quest>(questName);
             if (quest != null) {
@@ -2285,7 +2297,7 @@ namespace AnyRPG {
             HandleEnterInteractableRangeClient(networkInteractable);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleEnterInteractableRangeClient(FishNetInteractable networkInteractable) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleEnterInteractableRangeClient(networkInteractable: {networkInteractable?.gameObject.name})");
 
@@ -2305,7 +2317,7 @@ namespace AnyRPG {
             HandleExitInteractableRangeClient(networkInteractable);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleExitInteractableRangeClient(FishNetInteractable networkInteractable) {
             InteractableBase interactable = null;
             if (networkInteractable != null) {
@@ -2319,7 +2331,7 @@ namespace AnyRPG {
             HandleSpecializationChangeClient(newSpecialization == null ? string.Empty : newSpecialization.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleSpecializationChangeClient(string newSpecializationName) {
             ClassSpecialization newSpecialization = systemDataFactory.GetResource<ClassSpecialization>(newSpecializationName);
             unitController.BaseCharacter.ChangeClassSpecialization(newSpecialization);
@@ -2329,7 +2341,7 @@ namespace AnyRPG {
             HandleFactionChangeClient(newFaction.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleFactionChangeClient(string newFactionName) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleFactionChangeClient({newFactionName})");
 
@@ -2345,7 +2357,7 @@ namespace AnyRPG {
             HandleClassChangeClient(newCharacterClass.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleClassChangeClient(string newCharacterClassName) {
             CharacterClass newCharacterClass = systemDataFactory.GetResource<CharacterClass>(newCharacterClassName);
             unitController.BaseCharacter.ChangeCharacterClass(newCharacterClass);
@@ -2361,7 +2373,7 @@ namespace AnyRPG {
         }
         */
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleEnterInteractableTriggerClient(FishNetInteractable networkInteractable) {
             InteractableBase triggerInteractable = null;
             if (networkInteractable != null) {
@@ -2375,7 +2387,7 @@ namespace AnyRPG {
         }
 
         /*
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleDespawnClient() {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleDespawnClient()");
 
@@ -2383,7 +2395,7 @@ namespace AnyRPG {
         }
         */
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleLevelChanged(int newLevel) {
             unitController.CharacterStats.SetLevel(newLevel);
         }
@@ -2392,7 +2404,7 @@ namespace AnyRPG {
             HandleGainXP(gainedXP, currentXP);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         private void HandleGainXP(int gainedXP, int currentXP) {
             unitController.CharacterStats.SetXP(currentXP);
             unitController.UnitEventController.NotifyOnGainXP(gainedXP, currentXP);
@@ -2412,7 +2424,7 @@ namespace AnyRPG {
             HandleSpawnAbilityEffectPrefabsClient(networkTarget, networkOriginalTarget, lengthEffectProperties.ResourceName, abilityEffectContext.GetSerializableContext());
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleSpawnAbilityEffectPrefabsClient(FishNetInteractable networkTarget, FishNetInteractable networkOriginalTarget, string abilityEffectName, SerializableAbilityEffectContext serializableAbilityEffectContext) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleSpawnAbilityObjectsClient({networkTarget?.gameObject.name}, {networkOriginalTarget?.gameObject.name}, {abilityEffectName})");
 
@@ -2449,7 +2461,7 @@ namespace AnyRPG {
             HandleSpawnProjectileEffectPrefabsClient(networkTarget, networkOriginalTarget, projectileEffectProperties.ResourceName, abilityEffectContext.GetSerializableContext());
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleSpawnProjectileEffectPrefabsClient(FishNetInteractable networkTarget, FishNetInteractable networkOriginalTarget, string abilityEffectName, SerializableAbilityEffectContext serializableAbilityEffectContext) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleSpawnProjectileEffectPrefabsClient({networkTarget?.gameObject.name}, {networkOriginalTarget?.gameObject.name}, {abilityEffectName})");
 
@@ -2486,7 +2498,7 @@ namespace AnyRPG {
             HandleSpawnChanneledEffectPrefabsClient(networkTarget, networkOriginalTarget, channeledEffectProperties.ResourceName, abilityEffectContext.GetSerializableContext());
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleSpawnChanneledEffectPrefabsClient(FishNetInteractable networkTarget, FishNetInteractable networkOriginalTarget, string abilityEffectName, SerializableAbilityEffectContext serializableAbilityEffectContext) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleSpawnProjectileEffectPrefabsClient({networkTarget?.gameObject.name}, {networkOriginalTarget?.gameObject.name}, {abilityEffectName})");
 
@@ -2516,7 +2528,7 @@ namespace AnyRPG {
             HandleSpawnAbilityObjectsClient(ability.ResourceName, index);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleSpawnAbilityObjectsClient(string abilityName, int index) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleSpawnAbilityObjectsClient()");
 
@@ -2526,14 +2538,14 @@ namespace AnyRPG {
             }
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleDespawnAbilityObjects() {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleDespawnAbilityObjects()");
 
             unitController.CharacterAbilityManager.DespawnAbilityObjects();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleDropCombat() {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleDropCombat()");
 
@@ -2551,7 +2563,7 @@ namespace AnyRPG {
             HandleEnterCombatClient(networkUnitController);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleEnterCombatClient(FishNetUnitController networkUnitController) {
             //Debug.Log($"{gameObject.name}.HandleEnterCombatClient()");
             
@@ -2566,7 +2578,7 @@ namespace AnyRPG {
             HandleBeforeDieClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleBeforeDieClient() {
             //Debug.Log($"{gameObject.name}.HandleBeforeDieClient()");
 
@@ -2580,7 +2592,7 @@ namespace AnyRPG {
             HandleReviveBeginClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleReviveBeginClient() {
             //Debug.Log($"{gameObject.name}.HandleBeforeDieClient()");
 
@@ -2593,7 +2605,7 @@ namespace AnyRPG {
             HandleReviveCompleteClient();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleReviveCompleteClient() {
             //Debug.Log($"{gameObject.name}.HandleReviveCompleteClient()");
 
@@ -2719,7 +2731,7 @@ namespace AnyRPG {
             HandleResourceAmountChangedClient(powerResource.resourceName, oldValue, newValue);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleResourceAmountChangedClient(string powerResourceName, int oldValue, int newValue) {
             unitController.CharacterStats.SetResourceAmount(powerResourceName, newValue);
         }
@@ -2728,7 +2740,7 @@ namespace AnyRPG {
             HandleBeginChatMessageClient(messageText);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleBeginChatMessageClient(string messageText) {
             unitController.BeginChatMessage(messageText);
         }
@@ -2739,7 +2751,7 @@ namespace AnyRPG {
             HandlePerformAbilityCastAnimationClient(baseAbility.ResourceName, clipIndex);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandlePerformAbilityCastAnimationClient(string abilityName, int clipIndex) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandlePerformAbilityCastAnimationClient({abilityName}, {clipIndex})");
 
@@ -2756,7 +2768,7 @@ namespace AnyRPG {
             HandlePerformAbilityActionAnimationClient(baseAbility.ResourceName, clipIndex);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandlePerformAbilityActionAnimationClient(string abilityName, int clipIndex) {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandlePerformAbilityActionAnimationClient({abilityName})");
 
@@ -2772,7 +2784,7 @@ namespace AnyRPG {
             HandlePerformAnimatedActionClient(animatedAction.ResourceName);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandlePerformAnimatedActionClient(string actionName) {
             AnimatedAction animatedAction = systemDataFactory.GetResource<AnimatedAction>(actionName);
             if (animatedAction == null) {
@@ -2781,17 +2793,17 @@ namespace AnyRPG {
             unitController.UnitAnimator.PerformAnimatedAction(animatedAction);
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleClearActionClient() {
             unitController.UnitAnimator.ClearAction();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleClearAnimatedAbilityClient() {
             unitController.UnitAnimator.ClearAnimatedAbility();
         }
 
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleClearCastingClient() {
             //Debug.Log($"{gameObject.name}.FishNetUnitController.HandleClearCastingClient()");
 
@@ -2799,7 +2811,7 @@ namespace AnyRPG {
         }
 
         /*
-        [ObserversRpc]
+        [ObserversRpc(ExcludeServer = true)]
         public void HandleAnimatorDeathClient() {
             unitController.UnitAnimator.HandleDie();
         }
